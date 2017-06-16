@@ -308,16 +308,19 @@
                                     <outlet property="loadValue" destination="ecH-MN-Eap" id="hZL-gv-0m4"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="beamEditCell" rowHeight="61" id="zY3-am-Kj4" customClass="CustomCell_EditBeam" customModule="BeamGrapherForIpadV_0_0_3" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="beamEditCell" rowHeight="61" id="zY3-am-Kj4" customClass="CustomCell_EditBeam" customModule="BeamGrapherForIpadV_0_0_3" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="143.5" width="320" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zY3-am-Kj4" id="vV1-yX-oAh">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="60.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J50-Ut-sO9">
-                                            <rect key="frame" x="88" y="8" width="132" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J50-Ut-sO9">
+                                            <rect key="frame" x="85" y="8" width="150" height="30"/>
                                             <color key="backgroundColor" red="0.90776622295379639" green="0.90776622295379639" blue="0.90776622295379639" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="150" id="ADM-Ts-QRI"/>
+                                            </constraints>
                                             <state key="normal" title="Edit Beam Data">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
@@ -327,6 +330,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="J50-Ut-sO9" firstAttribute="centerX" secondItem="vV1-yX-oAh" secondAttribute="centerX" id="P1y-rl-Zj2"/>
                                         <constraint firstItem="J50-Ut-sO9" firstAttribute="top" secondItem="vV1-yX-oAh" secondAttribute="topMargin" id="XWz-cZ-s0h"/>
                                     </constraints>
                                 </tableViewCellContentView>
