@@ -35,7 +35,7 @@ class ViewController_EditLoad: UIViewController {
             switch_LinearUp.setOn(false, animated: true)
             switch_LinearDown.setOn(false, animated: true)
         }else if theLoad.loadType == loadTypeEnum.uniform{
-            switch_Concentrated.setOn(false, animated:true)
+            self.switch_Concentrated.setOn(false, animated:true)
             switch_Uniform.setOn(true, animated: true)
             switch_LinearUp.setOn(false, animated: true)
             switch_LinearDown.setOn(false, animated: true)
@@ -122,14 +122,14 @@ class ViewController_EditLoad: UIViewController {
     }
     
     @IBAction func click_LUp(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum.linearUp
+        theLoad.loadType = loadTypeEnum(rawValue: loadTypeEnum.linearUp.rawValue)!
         setLoadTypeSwitch()
          self.tv_EndLocation.text = "\(self.theBeam.length)"
     }
     
     
     @IBAction func click_LD(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum.linearDown
+        theLoad.loadType = loadTypeEnum(rawValue: loadTypeEnum.linearDown.rawValue)!
         setLoadTypeSwitch()
          self.tv_EndLocation.text = "\(self.theBeam.length)"
     }

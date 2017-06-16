@@ -24,19 +24,24 @@ class MWBeamGraphView: UIView {
     var graphColorB = UIColor.gray
     var beamColor = UIColor.green
     var graphColorSelected = UIColor.blue
+    var supportColor = UIColor.purple
 
     
     var xPath = UIBezierPath() //path for the x values i.e. the beam
     var yPath = UIBezierPath() //path the y values i.e. the results
     var zPaths = [UIBezierPath]() //a collection of paths for the the results of separate indivigual loads
     var circPaths:[UIBezierPath] = [UIBezierPath]()
+    var sPath = UIBezierPath() //path for the supports
     
-    
-   
+    var support1:Double = 0
+    var support2:Double = 0
+
     
     var loadComboResult = MWLoadComboResult()
     var selectedLoadIndex:Int = 0
     
+    
+    var beamThickness:Double = 2
     
     
     override func draw(_ dirtyRect: CGRect) {
@@ -70,8 +75,14 @@ class MWBeamGraphView: UIView {
         
         //draw the beam
         beamColor.set()
-        xPath.lineWidth = 2
+        xPath.lineWidth = CGFloat(beamThickness)
         xPath.stroke()
+        
+        //draw the supports
+        supportColor.set()
+        sPath.lineWidth = 2
+        sPath.stroke()
+        
         
         //draw the main results graph
         graphColor.set()
@@ -81,7 +92,10 @@ class MWBeamGraphView: UIView {
     
     
     //load member vars and does some initialization, do not want to override the NSViews init()
-    func loadDataCollection(_ theTitle:NSString,theLoadComboResult:MWLoadComboResult, xPadding:Int, yPadding:Int, optionalMaxUnits:String = ""){
+    func loadDataCollection(theBeam:MWBeamGeometry,theTitle:NSString, theLoadComboResult:MWLoadComboResult, xPadding:Int, yPadding:Int, optionalMaxUnits:String = ""){
+        
+        support1 = theBeam.supportLocationA
+        support2 = theBeam.supportLocationB
         
         title = theTitle
         maxUnits = optionalMaxUnits as NSString
@@ -131,6 +145,10 @@ class MWBeamGraphView: UIView {
     }
     
     func getyScaleFactor()->Double{
+        guard maxY > 0 else{
+            return 0
+        }
+        
         let yscale = ((Double(self.frame.height)/2) - Double(yPad)) / maxY
         return yscale
     }
@@ -217,8 +235,50 @@ class MWBeamGraphView: UIView {
         //add the title back
         drawTitle(selectedLoadIndex, totals: totals)
         
+        //add the supports
+        drawSupports()
+        
         //add the labels to the chosen graph
         drawLabels(collectionToLabel)
+    }
+    
+    
+    func drawSupports(){
+        sPath.removeAllPoints() //set it up for a new draw
+        let xScale = getxScaleFactor()
+        //let yScale = getyScaleFactor()
+        let legLength:CGFloat = 10
+        let yAdjustment:Double = Double(self.frame.height - 3)/2
+        
+        //populates the bezierPath with the the support strokes
+        let s1Localx:CGFloat = CGFloat((Double(xPad/2) + (support1 * xScale)))
+        let s1Localy:CGFloat = CGFloat(yAdjustment + beamThickness)
+        
+        let s1Start  = CGPoint(x: s1Localx, y: s1Localy)
+        
+        let s1A = CGPoint(x: s1Localx - legLength, y: s1Localy + legLength)
+        let s1B = CGPoint(x: s1Localx + legLength, y: s1Localy + legLength)
+        
+        ////////////////////////////////////////////////////////////////////
+        
+        let s2Localx:CGFloat = CGFloat((Double(xPad/2) + (support2 * xScale)))
+        let s2Localy:CGFloat = CGFloat(yAdjustment + beamThickness)
+        
+        let s2Start  = CGPoint(x: s2Localx, y: s2Localy)
+        
+        let s2A = CGPoint(x: s2Localx - legLength, y: s2Localy + legLength)
+        let s2B = CGPoint(x: s2Localx + legLength, y: s2Localy + legLength)
+        
+        sPath.move(to: s1Start)
+        sPath.addLine(to: s1A)
+        sPath.move(to: s1Start)
+        sPath.addLine(to: s1B)
+        
+        sPath.move(to: s2Start)
+        sPath.addLine(to: s2A)
+        sPath.move(to: s2Start)
+        sPath.addLine(to: s2B)
+        
     }
     
     func drawTitle(_ loadIndex:Int, totals:Bool){

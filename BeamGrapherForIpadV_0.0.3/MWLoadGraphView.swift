@@ -22,11 +22,14 @@ class MWLoadGraphView: UIView {
     var xPath = UIBezierPath() //path for the x values
     var yPath = [UIBezierPath]() //path the y values
     var bPath = UIBezierPath()
+    var sPath = UIBezierPath()
     
     var title:NSString = ""
     var length:NSString = ""
     var E:NSString = ""
     var I: NSString = ""
+    var support1: Double = 0
+    var support2:Double = 0
 
     var loadCollection = [MWLoadData]()
     var maxX:Double = 1
@@ -76,6 +79,8 @@ class MWLoadGraphView: UIView {
         beamColor.set()
         xPath.lineWidth = 2
         xPath.stroke()
+        sPath.stroke()
+        
         UIColor.lightGray.setFill()
         xPath.fill()
         
@@ -83,7 +88,8 @@ class MWLoadGraphView: UIView {
     
     func loadDataCollection(_ theBeam:MWBeamGeometry, theLoadCollection:[MWLoadData], xPadding:Int, yPadding:Int){
         
-        
+        support1 = theBeam.supportLocationA
+        support2 = theBeam.supportLocationB
         
         title = theBeam.title as NSString
         length = NSString(format:"%.2f",theBeam.length)
@@ -134,6 +140,48 @@ class MWLoadGraphView: UIView {
         }//end for
         
         drawTitle()
+        //add the supports
+        drawSupports()
+        
+    }
+    
+    
+    func drawSupports(){
+        sPath.removeAllPoints() //set it up for a new draw
+        let xScale = getxScaleFactor()
+        //let yScale = getyScaleFactor()
+        let legLength:CGFloat = 10
+        let yAdjustment:Double = Double(self.frame.height - 3)/2
+        
+        //populates the bezierPath with the the support strokes
+        let s1Localx:CGFloat = CGFloat((Double(xPad/2) + (support1 * xScale)))
+        let s1Localy:CGFloat = CGFloat(yAdjustment + beamThickness)
+        
+        let s1Start  = CGPoint(x: s1Localx, y: s1Localy)
+        
+        let s1A = CGPoint(x: s1Localx - legLength, y: s1Localy + legLength)
+        let s1B = CGPoint(x: s1Localx + legLength, y: s1Localy + legLength)
+        
+        ////////////////////////////////////////////////////////////////////
+        
+        let s2Localx:CGFloat = CGFloat((Double(xPad/2) + (support2 * xScale)))
+        let s2Localy:CGFloat = CGFloat(yAdjustment + beamThickness)
+        
+        let s2Start  = CGPoint(x: s2Localx, y: s2Localy)
+        
+        let s2A = CGPoint(x: s2Localx - legLength, y: s2Localy + legLength)
+        let s2B = CGPoint(x: s2Localx + legLength, y: s2Localy + legLength)
+        
+        sPath.move(to: s1Start)
+        sPath.addLine(to: s1A)
+        sPath.move(to: s1Start)
+        sPath.addLine(to: s1B)
+        
+        sPath.move(to: s2Start)
+        sPath.addLine(to: s2A)
+        sPath.move(to: s2Start)
+        sPath.addLine(to: s2B)
+        
     }
     
     func drawBeam(_ dataCollection:[CGPoint]){

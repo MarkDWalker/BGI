@@ -14,8 +14,10 @@ protocol MyCellDelegator {
 
 protocol MyEditBeamGeoDelegator{
     func updateBeamGeo(_ beam:MWBeamGeometry)
+    func updateGraphs()
 }
 
 protocol MyEditLoadDelegator{
     func updateLoad(_ load:MWLoadData, indexOfLoad:Int)
 }
+

@@ -19,7 +19,7 @@ class DetailViewController: UIViewController{
     var loadCollection = [MWLoadData]()
     
     
-    var beam = MWBeamGeometry(theLength: 10, theDataPointCount: 99, theE: 1600, theI: 200)
+    var beam = MWBeamGeometry(theLength: 10.00, theE: 1600.00, theI: 200.00)
     
     
     var myShearGraphTotal = MWLoadComboResult()
@@ -235,19 +235,19 @@ class DetailViewController: UIViewController{
             
             
             
-            myShearGraphTotal.addResult(localShearGraph)
-            myMomentGraphTotal.addResult(localMomentGraph)
-            myDeflectionGraphTotal.addResult(localDeflectionGraph)
+            myShearGraphTotal.addLoadedBeamGraphData(localShearGraph)
+            myMomentGraphTotal.addLoadedBeamGraphData(localMomentGraph)
+            myDeflectionGraphTotal.addLoadedBeamGraphData(localDeflectionGraph)
        
         }// end for
         
         
         //now put the load combo results into the actual beam view object that are subviews
-        shearGraph.loadDataCollection("Shear", theLoadComboResult: myShearGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits:"kips")
+        shearGraph.loadDataCollection(theBeam: beam, theTitle: "Shear", theLoadComboResult: myShearGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits:"kips")
         
-        momentGraph.loadDataCollection("Moment", theLoadComboResult: myMomentGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits: "ft-Kips")
+        momentGraph.loadDataCollection(theBeam: beam, theTitle: "Moment", theLoadComboResult: myMomentGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits: "ft-Kips")
         
-        deflectionGraph.loadDataCollection("Deflection", theLoadComboResult: myDeflectionGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits: "inches")
+        deflectionGraph.loadDataCollection(theBeam: beam, theTitle: "Deflection", theLoadComboResult: myDeflectionGraphTotal, xPadding: 80, yPadding: 30, optionalMaxUnits: "inches")
         
         
         //redraw the view objects

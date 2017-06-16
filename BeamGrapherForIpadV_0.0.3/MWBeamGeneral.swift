@@ -3,25 +3,28 @@ import UIKit
 
 
 
-class MWBeamGeometry: NSObject{
-    var title:String = "B1"
-    var length:Double = 10.0  //beam length
-    var dataPointCount:Int = 19  //number of data points for the calculation on the beam
-    var E:Double = 1600
-    var I:Double = 200
-    
-    override init(){
-        
-    }
-    
-    init(theLength:Double, theDataPointCount:Int, theE:Double = 1600, theI:Double = 200){
-        length = theLength
-        dataPointCount = theDataPointCount
-        E = theE
-        I = theI
-    }
-    
-}
+//class MWBeamGeometry: NSObject{
+//    var title:String = "B1"
+//    var length:Double = 10.0  //beam length
+//    var dataPointCount:Int = 19  //number of data points for the calculation on the beam
+//    var E:Double = 1600
+//    var I:Double = 200
+//    
+//    override init(){
+//        
+//    }
+//    
+//    init(theLength:Double, theDataPointCount:Int, theE:Double = 1600, theI:Double = 200){
+//        length = theLength
+//        dataPointCount = theDataPointCount
+//        E = theE
+//        I = theI
+//    }
+//    
+//}
+
+
+
 
 enum loadTypeEnum:String{
     case concentrated = "Concentrated"
@@ -29,6 +32,9 @@ enum loadTypeEnum:String{
     case linearUp = "Linear Up"
     case linearDown = "Linear Down"
 }
+
+
+
 
 class MWLoadData:NSObject{
     var loadDescription:String = "theload"
@@ -39,7 +45,7 @@ class MWLoadData:NSObject{
     var loadEnd:Double = 0.0
     var graphPointCollection=[CGPoint]()
     //var maxYInGraph:Double = 0
-    var beamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 1, theDataPointCount: 1, theE: 1600, theI: 200)
+    var beamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 1, theE: 1600, theI: 200)
     
     override init(){
         
@@ -125,396 +131,396 @@ graphPointCollection.removeAll()
 }//end class
 
 enum calcTypeEnum:String{
-    case shear = "shear"
+    case shear = "Shear"
     case moment = "Moment"
     case deflection = "Deflection"
 }
 
-class MWStructuralEquations:NSObject{
-    
-    var BeamGeo:MWBeamGeometry = MWBeamGeometry()
-    var Load:MWLoadData = MWLoadData()
-    var calcType:calcTypeEnum = .moment
-    
-    override init(){
-        super.init()
-    }
-    
-    func loadEquationValues(_ theCalcType:calcTypeEnum, theLoad:MWLoadData, theBeamGeo:MWBeamGeometry){
-        
-        BeamGeo = theBeamGeo
-        Load = theLoad
-        calcType = theCalcType
-    }
-    
-    
-    func performCalc(_ location:Double)->Double{
-        var returnValue:Double = 0
-        
-        
-        if calcType == .shear && Load.loadType == .uniform{
-            returnValue = -uniformLoadShear(location)
-            
-        }else if calcType == .moment && Load.loadType == .uniform{
-            returnValue = uniformLoadMoment(location)
-            
-        }else if calcType == .deflection && Load.loadType == .uniform{
-            returnValue = uniformLoadDeflection(location, E:BeamGeo.E, I: BeamGeo.I)
-        
-        }else if calcType == .shear && Load.loadType == .concentrated{
-            returnValue = -concentratedLoadShear(location)
-        
-        }else if calcType == .moment && Load.loadType == .concentrated{
-            returnValue = concentratedLoadMoment(location)
-        
-        }else if calcType == .deflection && Load.loadType == .concentrated{
-            returnValue = concentratedLoadDeflection(location, E:BeamGeo.E, I: BeamGeo.I)
-        
-        }else if calcType == .shear && (Load.loadType == .linearUp || Load.loadType == .linearDown){
-            returnValue =  -linearLoadShear(location)
-        
-        }else if calcType == .moment && (Load.loadType == .linearUp || Load.loadType == .linearDown){
-        returnValue = linearLoadMoment(location)
-       
-        }else if calcType == .deflection && (Load.loadType == .linearUp || Load.loadType == .linearDown){
-            returnValue = linearLoadDeflection(location, E:BeamGeo.E, I:BeamGeo.I)
-        }
-        
-        return returnValue
-    }
-    
-    
-    //////uniform load functions
-    func uniformLoadShear(_ location:Double)->Double{
-        var returnValue:Double = 0
-        let l:Double = BeamGeo.length
-        let a:Double = Load.loadStart
-        let b:Double = Load.loadEnd - Load.loadStart
-        let c:Double = l-Load.loadEnd
-        let w:Double = Load.loadValue
-        let x:Double = location
-        let R1:Double = w*b*(2*c+b)/(2*l)
-        let R2:Double = w*b*(2*a+b)/(2*l)
-        
-        if x<a{
-            returnValue = R1
-        }else if x>a+b{
-            returnValue = -R2
-        }else{
-            returnValue = R1 - w * (x - a)
-        }
-        return returnValue
-    }
-    
-    func uniformLoadMoment(_ location:Double)->Double{
-        var returnValue:Double = 0
-        let l:Double = BeamGeo.length
-        let a:Double = Load.loadStart
-        let b:Double = Load.loadEnd - Load.loadStart
-        let c:Double = l-Load.loadEnd
-        let w:Double = Load.loadValue
-        let x:Double = location
-        let R1:Double = w*b*(2*c+b)/(2*l)
-        let R2:Double = w*b*(2*a+b)/(2*l)
-        
-        if x<a{
-            returnValue = R1 * x
-        }else if x>a+b{
-            returnValue = R2 * (l-x)
-        }else{
-          returnValue = (R1 * x) - ((w/2) * (x - a) * (x - a))
-        }
-        
-        return returnValue
-    }
-    
-    func uniformLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
-        var tempResult:Double = 0
-        //_:Double = Load.loadEnd - Load.loadStart
-        var tempLoadPos:Double = Load.loadStart
-        let stepDistance:Double = 0.001
-        let Ifeet:Double = I / (12*12*12*12)
-        let Efeet:Double = E * 12 * 12
-        
-        //set the array of concentrated loads
-            
-            while tempLoadPos<=Load.loadEnd{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let x2:Double = l-x
-                let p:Double=Load.loadValue
-                
-                
-                if x <= tempLoadPos {
-                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
-                }else{
-                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-            } //end while
-            
-        
-        
-        let returnValue:Double = tempResult*12  //* 12 to get back to inches
-        return returnValue
-    }
-    ////end uniform load functions
-    
-    ////Concentrated Load functions
-    func concentratedLoadShear(_ location:Double)->Double{
-        var returnValue:Double = 0
-        let l:Double=BeamGeo.length
-        let a:Double=Load.loadStart
-        let b:Double=l-Load.loadStart
-       // _:Double=location
-        let p:Double=Load.loadValue
-        
-        if location<=Load.loadStart {
-            returnValue = p*b/l
-        }else{
-            returnValue = -p*a/l
-        }
-        return returnValue
-    }
-    
-    func concentratedLoadMoment(_ location:Double)->Double{
-        var returnValue:Double = 0
-        let l:Double=BeamGeo.length
-        let a:Double=Load.loadStart
-        let b:Double=l-Load.loadStart
-        let x:Double=location
-        let p:Double=Load.loadValue
-        if x <= a{
-            returnValue = p * b * x / l
-        }else{
-            returnValue = p * a * (l-x) / l
-        }
-        return returnValue
-    }
-    
-    func concentratedLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
-        var returnValue:Double = 0
-        let l:Double = BeamGeo.length
-        let x:Double = location
-        let x2:Double = l-location
-        let a:Double = Load.loadStart
-        let b:Double = l-Load.loadStart
-        let p:Double = Load.loadValue
-        let Ifeet:Double = I / (12*12*12*12)
-        let Efeet:Double = E * 12 * 12
-        
-        if location < Load.loadStart{
-            returnValue = 12*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
-        }else{
-            returnValue = 12*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
-        }
-        
-        return returnValue
-    }
-    //// end concentrated load functions
-    
-    //linear Load functions
-    func linearLoadShear(_ location:Double)->Double{
-        var tempResult:Double = 0
-        let loadLength:Double = Load.loadEnd - Load.loadStart
-        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
-        //_;:Double = 1
-        var tempLoadMag:Double = Load.loadValue
-        var tempLoadPos:Double = Load.loadStart
-        let stepDistance:Double = 0.001
-    
-    
-        //set the array of concentrated loads
-        if Load.loadValue == 0 { //we know that the load slopes up
-            
-            while tempLoadPos<=Load.loadEnd{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let p:Double=tempLoadMag
-                
-                if x <= tempLoadPos {
-                    tempResult = tempResult + stepDistance*p*b/l
-                }else{
-                    tempResult = tempResult - stepDistance*p*a/l
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
-            } //end while
-    
-            
-            
-        }else{ //the load slopes down
-    
-            
-            
-            while tempLoadMag>=0{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let p:Double=tempLoadMag
-                
-                if x<=tempLoadPos {
-                    tempResult = tempResult + stepDistance * p * b / l
-                }else{
-                    tempResult = tempResult - stepDistance * p *  a / l
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
-                
-            } //end while
-            
-        }//end if
-        
-        
-        let returnValue:Double = tempResult
-        return returnValue
-    }
-    
-    func linearLoadMoment(_ location:Double)->Double{
-        var tempResult:Double = 0
-        let loadLength:Double = Load.loadEnd - Load.loadStart
-        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
-        var tempLoadMag:Double = Load.loadValue
-        var tempLoadPos:Double = Load.loadStart
-        let stepDistance:Double = 0.001
-        
-        
-        //set the array of concentrated loads
-        if Load.loadValue == 0 { //we know that the load slopes up
-            
-            while tempLoadPos<=Load.loadEnd{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let p:Double=tempLoadMag
-                
-                if x <= tempLoadPos {
-                    tempResult = tempResult + stepDistance*p*b*x/l
-                }else{
-                    tempResult = tempResult + stepDistance*p*a*(l-x)/l
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
-            } //end while
-            
-            
-            
-        }else{ //the load slopes down
-            
-            
-            
-            while tempLoadMag>=0{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let p:Double=tempLoadMag
-                
-                if x<=tempLoadPos {
-                    tempResult = tempResult + stepDistance * p * b * x / l
-                }else{
-                    tempResult = tempResult + stepDistance * p *  a * (l-x) / l
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
-                
-            } //end while
-            
-        }//end if
-        
-        
-        let returnValue:Double = tempResult
-        return returnValue
-    }
-    
-    func linearLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
-        var tempResult:Double = 0
-        let loadLength:Double = Load.loadEnd - Load.loadStart
-        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
-        var tempLoadMag:Double = Load.loadValue
-        var tempLoadPos:Double = Load.loadStart
-        let stepDistance:Double = 0.001
-        let Ifeet:Double = I / (12*12*12*12)
-        let Efeet:Double = E * 12 * 12
-        
-        //set the array of concentrated loads
-        if Load.loadValue == 0 { //we know that the load slopes up
-            
-            while tempLoadPos<=Load.loadEnd{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let x2:Double = l-x
-                let p:Double=tempLoadMag
-                
-                
-                
-                if x <= tempLoadPos {
-                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
-                }else{
-                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
-            } //end while
-            
-            
-            
-        }else{ //the load slopes down
-            
-            
-            
-            while tempLoadMag>=0{
-                
-                let l:Double=BeamGeo.length
-                let a:Double=tempLoadPos
-                let b:Double=l-tempLoadPos
-                let x:Double=location
-                let x2:Double = l-x
-                let p:Double=tempLoadMag
-                
-                if x<=tempLoadPos {
-                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
-                }else{
-                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
-                }// end if
-                
-                tempLoadPos = tempLoadPos + stepDistance
-                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
-                
-            } //end while
-            
-        }//end if
-        
-        
-        let returnValue:Double = tempResult*12
-        return returnValue
-
-    }
-    ////end Linear load functions
-    
-    
-    
-}//end class
+//class MWStructuralEquations:NSObject{
+//    
+//    var BeamGeo:MWBeamGeometry = MWBeamGeometry()
+//    var Load:MWLoadData = MWLoadData()
+//    var calcType:calcTypeEnum = .moment
+//    
+//    override init(){
+//        super.init()
+//    }
+//    
+//    func loadEquationValues(_ theCalcType:calcTypeEnum, theLoad:MWLoadData, theBeamGeo:MWBeamGeometry){
+//        
+//        BeamGeo = theBeamGeo
+//        Load = theLoad
+//        calcType = theCalcType
+//    }
+//    
+//    
+//    func performCalc(_ location:Double)->Double{
+//        var returnValue:Double = 0
+//        
+//        
+//        if calcType == .shear && Load.loadType == loadTypeEnum.uniform{
+//            returnValue = -uniformLoadShear(location)
+//            
+//        }else if calcType == .moment && Load.loadType == loadTypeEnum.uniform{
+//            returnValue = uniformLoadMoment(location)
+//            
+//        }else if calcType == .deflection && Load.loadType == loadTypeEnum.uniform{
+//            returnValue = uniformLoadDeflection(location, E:BeamGeo.E, I: BeamGeo.I)
+//        
+//        }else if calcType == .shear && Load.loadType == loadTypeEnum.concentrated{
+//            returnValue = -concentratedLoadShear(location)
+//        
+//        }else if calcType == .moment && Load.loadType == loadTypeEnum.concentrated{
+//            returnValue = concentratedLoadMoment(location)
+//        
+//        }else if calcType == .deflection && Load.loadType == loadTypeEnum.concentrated{
+//            returnValue = concentratedLoadDeflection(location, E:BeamGeo.E, I: BeamGeo.I)
+//        
+//        }else if calcType == .shear && (Load.loadType == loadTypeEnum.linearUp || Load.loadType == loadTypeEnum.linearDown){
+//            returnValue =  -linearLoadShear(location)
+//        
+//        }else if calcType == .moment && (Load.loadType == loadTypeEnum.linearUp || Load.loadType == loadTypeEnum.linearDown ){
+//        returnValue = linearLoadMoment(location)
+//       
+//        }else if calcType == .deflection && (Load.loadType == loadTypeEnum.linearUp || Load.loadType == loadTypeEnum.linearDown){
+//            returnValue = linearLoadDeflection(location, E:BeamGeo.E, I:BeamGeo.I)
+//        }
+//        
+//        return returnValue
+//    }
+//    
+//    
+//    //////uniform load functions
+//    func uniformLoadShear(_ location:Double)->Double{
+//        var returnValue:Double = 0
+//        let l:Double = BeamGeo.length
+//        let a:Double = Load.loadStart
+//        let b:Double = Load.loadEnd - Load.loadStart
+//        let c:Double = l-Load.loadEnd
+//        let w:Double = Load.loadValue
+//        let x:Double = location
+//        let R1:Double = w*b*(2*c+b)/(2*l)
+//        let R2:Double = w*b*(2*a+b)/(2*l)
+//        
+//        if x<a{
+//            returnValue = R1
+//        }else if x>a+b{
+//            returnValue = -R2
+//        }else{
+//            returnValue = R1 - w * (x - a)
+//        }
+//        return returnValue
+//    }
+//    
+//    func uniformLoadMoment(_ location:Double)->Double{
+//        var returnValue:Double = 0
+//        let l:Double = BeamGeo.length
+//        let a:Double = Load.loadStart
+//        let b:Double = Load.loadEnd - Load.loadStart
+//        let c:Double = l-Load.loadEnd
+//        let w:Double = Load.loadValue
+//        let x:Double = location
+//        let R1:Double = w*b*(2*c+b)/(2*l)
+//        let R2:Double = w*b*(2*a+b)/(2*l)
+//        
+//        if x<a{
+//            returnValue = R1 * x
+//        }else if x>a+b{
+//            returnValue = R2 * (l-x)
+//        }else{
+//          returnValue = (R1 * x) - ((w/2) * (x - a) * (x - a))
+//        }
+//        
+//        return returnValue
+//    }
+//    
+//    func uniformLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
+//        var tempResult:Double = 0
+//        //_:Double = Load.loadEnd - Load.loadStart
+//        var tempLoadPos:Double = Load.loadStart
+//        let stepDistance:Double = 0.001
+//        let Ifeet:Double = I / (12*12*12*12)
+//        let Efeet:Double = E * 12 * 12
+//        
+//        //set the array of concentrated loads
+//            
+//            while tempLoadPos<=Load.loadEnd{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let x2:Double = l-x
+//                let p:Double=Load.loadValue
+//                
+//                
+//                if x <= tempLoadPos {
+//                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
+//                }else{
+//                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//            } //end while
+//            
+//        
+//        
+//        let returnValue:Double = tempResult*12  //* 12 to get back to inches
+//        return returnValue
+//    }
+//    ////end uniform load functions
+//    
+//    ////Concentrated Load functions
+//    func concentratedLoadShear(_ location:Double)->Double{
+//        var returnValue:Double = 0
+//        let l:Double=BeamGeo.length
+//        let a:Double=Load.loadStart
+//        let b:Double=l-Load.loadStart
+//       // _:Double=location
+//        let p:Double=Load.loadValue
+//        
+//        if location<=Load.loadStart {
+//            returnValue = p*b/l
+//        }else{
+//            returnValue = -p*a/l
+//        }
+//        return returnValue
+//    }
+//    
+//    func concentratedLoadMoment(_ location:Double)->Double{
+//        var returnValue:Double = 0
+//        let l:Double=BeamGeo.length
+//        let a:Double=Load.loadStart
+//        let b:Double=l-Load.loadStart
+//        let x:Double=location
+//        let p:Double=Load.loadValue
+//        if x <= a{
+//            returnValue = p * b * x / l
+//        }else{
+//            returnValue = p * a * (l-x) / l
+//        }
+//        return returnValue
+//    }
+//    
+//    func concentratedLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
+//        var returnValue:Double = 0
+//        let l:Double = BeamGeo.length
+//        let x:Double = location
+//        let x2:Double = l-location
+//        let a:Double = Load.loadStart
+//        let b:Double = l-Load.loadStart
+//        let p:Double = Load.loadValue
+//        let Ifeet:Double = I / (12*12*12*12)
+//        let Efeet:Double = E * 12 * 12
+//        
+//        if location < Load.loadStart{
+//            returnValue = 12*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
+//        }else{
+//            returnValue = 12*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
+//        }
+//        
+//        return returnValue
+//    }
+//    //// end concentrated load functions
+//    
+//    //linear Load functions
+//    func linearLoadShear(_ location:Double)->Double{
+//        var tempResult:Double = 0
+//        let loadLength:Double = Load.loadEnd - Load.loadStart
+//        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
+//        //_;:Double = 1
+//        var tempLoadMag:Double = Load.loadValue
+//        var tempLoadPos:Double = Load.loadStart
+//        let stepDistance:Double = 0.001
+//    
+//    
+//        //set the array of concentrated loads
+//        if Load.loadValue == 0 { //we know that the load slopes up
+//            
+//            while tempLoadPos<=Load.loadEnd{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let p:Double=tempLoadMag
+//                
+//                if x <= tempLoadPos {
+//                    tempResult = tempResult + stepDistance*p*b/l
+//                }else{
+//                    tempResult = tempResult - stepDistance*p*a/l
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
+//            } //end while
+//    
+//            
+//            
+//        }else{ //the load slopes down
+//    
+//            
+//            
+//            while tempLoadMag>=0{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let p:Double=tempLoadMag
+//                
+//                if x<=tempLoadPos {
+//                    tempResult = tempResult + stepDistance * p * b / l
+//                }else{
+//                    tempResult = tempResult - stepDistance * p *  a / l
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
+//                
+//            } //end while
+//            
+//        }//end if
+//        
+//        
+//        let returnValue:Double = tempResult
+//        return returnValue
+//    }
+//    
+//    func linearLoadMoment(_ location:Double)->Double{
+//        var tempResult:Double = 0
+//        let loadLength:Double = Load.loadEnd - Load.loadStart
+//        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
+//        var tempLoadMag:Double = Load.loadValue
+//        var tempLoadPos:Double = Load.loadStart
+//        let stepDistance:Double = 0.001
+//        
+//        
+//        //set the array of concentrated loads
+//        if Load.loadValue == 0 { //we know that the load slopes up
+//            
+//            while tempLoadPos<=Load.loadEnd{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let p:Double=tempLoadMag
+//                
+//                if x <= tempLoadPos {
+//                    tempResult = tempResult + stepDistance*p*b*x/l
+//                }else{
+//                    tempResult = tempResult + stepDistance*p*a*(l-x)/l
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
+//            } //end while
+//            
+//            
+//            
+//        }else{ //the load slopes down
+//            
+//            
+//            
+//            while tempLoadMag>=0{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let p:Double=tempLoadMag
+//                
+//                if x<=tempLoadPos {
+//                    tempResult = tempResult + stepDistance * p * b * x / l
+//                }else{
+//                    tempResult = tempResult + stepDistance * p *  a * (l-x) / l
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
+//                
+//            } //end while
+//            
+//        }//end if
+//        
+//        
+//        let returnValue:Double = tempResult
+//        return returnValue
+//    }
+//    
+//    func linearLoadDeflection(_ location:Double, E: Double, I:Double)->Double{
+//        var tempResult:Double = 0
+//        let loadLength:Double = Load.loadEnd - Load.loadStart
+//        let loadMagSlope:Double = ((Load.loadValue2 - Load.loadValue)/loadLength)
+//        var tempLoadMag:Double = Load.loadValue
+//        var tempLoadPos:Double = Load.loadStart
+//        let stepDistance:Double = 0.001
+//        let Ifeet:Double = I / (12*12*12*12)
+//        let Efeet:Double = E * 12 * 12
+//        
+//        //set the array of concentrated loads
+//        if Load.loadValue == 0 { //we know that the load slopes up
+//            
+//            while tempLoadPos<=Load.loadEnd{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let x2:Double = l-x
+//                let p:Double=tempLoadMag
+//                
+//                
+//                
+//                if x <= tempLoadPos {
+//                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
+//                }else{
+//                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope)
+//            } //end while
+//            
+//            
+//            
+//        }else{ //the load slopes down
+//            
+//            
+//            
+//            while tempLoadMag>=0{
+//                
+//                let l:Double=BeamGeo.length
+//                let a:Double=tempLoadPos
+//                let b:Double=l-tempLoadPos
+//                let x:Double=location
+//                let x2:Double = l-x
+//                let p:Double=tempLoadMag
+//                
+//                if x<=tempLoadPos {
+//                    tempResult = tempResult + stepDistance*p*b*x*(l*l-b*b-x*x)/(6*Efeet*Ifeet*l)
+//                }else{
+//                    tempResult = tempResult + stepDistance*p*a*x2*(l*l-a*a-x2*x2)/(6*Efeet*Ifeet*l)
+//                }// end if
+//                
+//                tempLoadPos = tempLoadPos + stepDistance
+//                tempLoadMag = Load.loadValue + ((tempLoadPos-Load.loadStart) * loadMagSlope) //the slope should be neg
+//                
+//            } //end while
+//            
+//        }//end if
+//        
+//        
+//        let returnValue:Double = tempResult*12
+//        return returnValue
+//
+//    }
+//    ////end Linear load functions
+//    
+//    
+//    
+//}//end class
 
 
 
@@ -542,7 +548,7 @@ class MWStructuralGraphData: NSObject{
         calcType = theCalcType  //sets value of class var
         
         //loads the initial required values into the equations object when a init() is used
-        equations.loadEquationValues(calcType, theLoad:Load, theBeamGeo: BeamGeo)
+        equations.loadEquationValues(calcType.rawValue, theLoad:Load, theBeamGeo: BeamGeo)
         
         //loads theDataCollection class var
         loadCalcDataCollection()
@@ -556,7 +562,7 @@ class MWStructuralGraphData: NSObject{
         calcType = theCalcType  //sets value of class var
     
         //loads the initial required values into the equations object when a init() is used
-        equations.loadEquationValues(calcType, theLoad:Load, theBeamGeo: BeamGeo)
+        equations.loadEquationValues(calcType.rawValue, theLoad:Load, theBeamGeo: BeamGeo)
     
         //loads theDataCollection class var
         loadCalcDataCollection()
@@ -612,6 +618,44 @@ class MWLoadComboResult:NSObject{
     override init(){
         
     }
+    
+    func addLoadedBeamGraphData(_ newStructuralGraphData:MWStructuralGraphData){
+        
+        //if this is the first one, just add it
+        if resultsCollection.count == 0 {
+            
+            resultsCollection.append(newStructuralGraphData)
+            
+            //set some values of the graphTotals Object
+            graphTotals.BeamGeo.length = newStructuralGraphData.BeamGeo.length
+            graphTotals.BeamGeo.dataPointCount = newStructuralGraphData.BeamGeo.dataPointCount
+            
+            setGraphTotals()
+            
+            //if this is not the first one do some checks
+        } else if resultsCollection.count > 0 {
+            
+            //data in the init graph data
+            let beamLength0:Double = resultsCollection[0].BeamGeo.length
+            let dataPointCount0:Int = resultsCollection[0].BeamGeo.dataPointCount
+            
+            //data in the newly added data
+            let beamLengthNew = newStructuralGraphData.BeamGeo.length
+            let dataPointCountNew = newStructuralGraphData.BeamGeo.dataPointCount
+            
+            //check that the the new dataset has the same beam length and the same datapoint count
+            if beamLength0 == beamLengthNew && dataPointCount0 == dataPointCountNew{
+                resultsCollection.append(newStructuralGraphData)
+                setGraphTotals()
+                
+            }else{
+                //should throw a flag here
+            }//end if
+            
+        }//end if
+        
+        
+    }//end function
    
     func setGraphTotals(){
         
@@ -634,48 +678,69 @@ class MWLoadComboResult:NSObject{
         
     } //end function
     
+    
+    
     func clearResultsCollection(){
         self.resultsCollection.removeAll(keepingCapacity: false)
     }
     
     
-    func addResult(_ newStructuralGraphData:MWStructuralGraphData){
+    fileprivate func setResultsCollectionFromArray(){
         
-        //if this is the first one, just add it
-        if resultsCollection.count == 0 {
-            
-            resultsCollection.append(newStructuralGraphData)
-            
-            //set some value of the graphTotals Object
-            graphTotals.BeamGeo.length = newStructuralGraphData.BeamGeo.length
-            graphTotals.BeamGeo.dataPointCount = newStructuralGraphData.BeamGeo.dataPointCount
-            
-            setGraphTotals()
-            
-            //if this is not the first one do some checks
-        } else if resultsCollection.count > 0 {
+//        resultsCollection.removeAll(keepingCapacity: false)
+//        for i in 0...archivableResultsCollection.count-1{
+//            resultsCollection.append(archivableResultsCollection[i] as! MWStructuralGraphData)
+//        }
         
-        //data in the init graph data
-        let beamLength0:Double = resultsCollection[0].BeamGeo.length
-        let dataPointCount0:Int = resultsCollection[0].BeamGeo.dataPointCount
+    }
+    
+    fileprivate func sendResultsCollectionToArray(){
         
-        //data in the newly added data
-        let beamLengthNew = newStructuralGraphData.BeamGeo.length
-        let dataPointCountNew = newStructuralGraphData.BeamGeo.dataPointCount
-        
-            //check that the the new dataset has the same beam length and the same datapoint count
-            if beamLength0 == beamLengthNew && dataPointCount0 == dataPointCountNew{
-                resultsCollection.append(newStructuralGraphData)
-                setGraphTotals()
-            
-            }else{
-                //should throw a flag here
-            }//end if
-            
-        }//end if
-        
-        
-    }//end function
+//        archivableResultsCollection.removeAllObjects()
+//        for i in 0...resultsCollection.count-1{
+//            archivableResultsCollection.add(resultsCollection[i])
+//        }
+    }
+    
+    
+    
+//    func addResult(_ newStructuralGraphData:MWStructuralGraphData){
+//        
+//        //if this is the first one, just add it
+//        if resultsCollection.count == 0 {
+//            
+//            resultsCollection.append(newStructuralGraphData)
+//            
+//            //set some value of the graphTotals Object
+//            graphTotals.BeamGeo.length = newStructuralGraphData.BeamGeo.length
+//            graphTotals.BeamGeo.dataPointCount = newStructuralGraphData.BeamGeo.dataPointCount
+//            
+//            setGraphTotals()
+//            
+//            //if this is not the first one do some checks
+//        } else if resultsCollection.count > 0 {
+//        
+//        //data in the init graph data
+//        let beamLength0:Double = resultsCollection[0].BeamGeo.length
+//        let dataPointCount0:Int = resultsCollection[0].BeamGeo.dataPointCount
+//        
+//        //data in the newly added data
+//        let beamLengthNew = newStructuralGraphData.BeamGeo.length
+//        let dataPointCountNew = newStructuralGraphData.BeamGeo.dataPointCount
+//        
+//            //check that the the new dataset has the same beam length and the same datapoint count
+//            if beamLength0 == beamLengthNew && dataPointCount0 == dataPointCountNew{
+//                resultsCollection.append(newStructuralGraphData)
+//                setGraphTotals()
+//            
+//            }else{
+//                //should throw a flag here
+//            }//end if
+//            
+//        }//end if
+//        
+//        
+//    }//end function
     
   
         

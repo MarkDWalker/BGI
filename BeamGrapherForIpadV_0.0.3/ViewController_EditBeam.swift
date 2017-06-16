@@ -20,7 +20,10 @@ class ViewController_EditBeam: UIViewController {
     @IBOutlet weak var tv_E: UITextField!
     @IBOutlet weak var tv_I: UITextField!
     
-  
+
+    @IBOutlet weak var tv_SupportLocA: UITextField!
+    @IBOutlet weak var tv_SupportLocB: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tv_Description.text = beamGeo.title
@@ -28,7 +31,9 @@ class ViewController_EditBeam: UIViewController {
         tv_DataPoints.text = "\(beamGeo.dataPointCount)"
         tv_E.text = "\(beamGeo.E)"
         tv_I.text = "\(beamGeo.I)"
-       
+        
+        tv_SupportLocA.text = "\(beamGeo.supportLocationA)"
+        tv_SupportLocB.text = "\(beamGeo.supportLocationB)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +49,7 @@ class ViewController_EditBeam: UIViewController {
   
     @IBAction func click_Update(_ sender: UIButton) {
         var lengthError:Bool = false
+        var supportError:Bool = false
         beamGeo.title = tv_Description.text!
         
         
@@ -79,11 +85,34 @@ class ViewController_EditBeam: UIViewController {
             //do not change the I value
         }
         
-        if lengthError == false && self.delegate != nil{
+        let s1 = myNums.txtToD(tv_SupportLocA.text!)
+        let s2 = myNums.txtToD(tv_SupportLocB.text!)
+        
+        if (s2 <= s1) {
+            supportError = true
+        }
+        
+        if (s1 < 0){
+            supportError = true
+        }
+        
+        if (s2 > length){
+            supportError = true
+        }
+        
+        
+        if (supportError == false){
+            beamGeo.supportLocationA = s1
+            beamGeo.supportLocationB = s2
+        }
+        
+        if lengthError == false && supportError == false && self.delegate != nil{
             delegate?.updateBeamGeo(beamGeo)
+            delegate?.updateGraphs()
             self.dismiss(animated: true, completion: nil)
         }
         
+       
         
         
     }

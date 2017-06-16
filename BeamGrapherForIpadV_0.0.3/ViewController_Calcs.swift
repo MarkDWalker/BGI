@@ -216,7 +216,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
         let i:Int = loadNumber
         
         let description:String = loadCollection[i].loadDescription
-        let type:loadTypeEnum  = loadCollection[i].loadType
+        let type:loadTypeEnum  = loadTypeEnum(rawValue: loadCollection[i].loadType.rawValue)!
         let typeString:String = loadCollection[i].loadType.rawValue
         var value:Double = 0
         
@@ -238,7 +238,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
         
         
         print("\(loadCollection.count)")
-        print("\(loadCollection[loadNumber].loadType.rawValue)")
+        print("\(loadCollection[loadNumber].loadType)")
         
         theString = theString + "Load Description - \(description)"
         theString = theString + "\n"

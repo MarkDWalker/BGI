@@ -54,7 +54,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
 
     
     //for the beam
-    var BeamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 10, theDataPointCount: 99, theE: 1600, theI: 200)
+    var BeamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 10.00, theE: 1600.00, theI: 200.00)
     
     //for the loads
     var cLoad:MWLoadData = MWLoadData()
@@ -85,7 +85,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         
         //add the initial values to the load - cLoad
-        cLoad.addValues("L1", theLoadValue: 2, theLoadType: .concentrated, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        cLoad.addValues("L1", theLoadValue: 2, theLoadType: loadTypeEnum(rawValue: loadTypeEnum.concentrated.rawValue)!, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: BeamGeo)
         
         //add cLoad to the load Collection
         loadCollection.append(cLoad)
@@ -110,7 +110,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     
     
     @IBAction func click_AddLoad(_ sender: UIBarButtonItem) {
-        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType: loadTypeEnum.concentrated, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType: loadTypeEnum(rawValue: loadTypeEnum.concentrated.rawValue)!, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: BeamGeo)
         
         loadCollection.append(newLoad)
         
@@ -258,7 +258,10 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     
 
     @IBAction func click_Refresh(_ sender: UIBarButtonItem) {
-        
+        updateGraphs()
+    }
+    
+    func updateGraphs(){
         detailViewController?.updateGraphs()
     }
     
@@ -295,7 +298,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             
             print("The height is \((sender! as AnyObject).frame.height)")
             print("The width is \((sender! as AnyObject).frame.width)")
-            let size:CGSize = CGSize(width: 400,height: 300)
+            let size:CGSize = CGSize(width: 400,height: 385)
             popController.contentSize = size;
             
             var f:CGRect = (sender as! UIButton).frame
