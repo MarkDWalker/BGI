@@ -85,15 +85,15 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         
         //add the initial values to the load - cLoad
-        cLoad.addValues("L1", theLoadValue: 2, theLoadType: loadTypeEnum(rawValue: loadTypeEnum.concentrated.rawValue)!, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        cLoad.addValues("L1", theLoadValue: 2, theLoadType: loadTypeEnum.concentrated.rawValue, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: BeamGeo)
         
         //add cLoad to the load Collection
         loadCollection.append(cLoad)
         
         
         
-        detailViewController?.beam = self.BeamGeo
-        detailViewController?.loadCollection = self.loadCollection
+        detailViewController?.a.BeamGeo = self.BeamGeo
+        detailViewController?.a.loadCollection = self.loadCollection
         
         //select a row in the table to avoid an error
         let indexPath = IndexPath(row: 0, section:1)
@@ -110,13 +110,13 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     
     
     @IBAction func click_AddLoad(_ sender: UIBarButtonItem) {
-        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType: loadTypeEnum(rawValue: loadTypeEnum.concentrated.rawValue)!, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType:loadTypeEnum.concentrated.rawValue, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: BeamGeo)
         
         loadCollection.append(newLoad)
         
         theTable.reloadData()
         
-        detailViewController?.loadCollection = self.loadCollection
+        detailViewController?.a.loadCollection = self.loadCollection
         
         detailViewController?.updateGraphs()
         
@@ -139,7 +139,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             }
             
             self.loadCollection = tempLoadCollection
-            detailViewController?.loadCollection = self.loadCollection
+            detailViewController?.a.loadCollection = self.loadCollection
             detailViewController?.updateGraphs()
             
             theTable.reloadData()
@@ -196,7 +196,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             }
             
             self.loadCollection = tempLoadCollection
-           detailViewController?.loadCollection = self.loadCollection
+           detailViewController?.a.loadCollection = self.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
             
@@ -245,7 +245,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             }
             
             self.loadCollection = tempLoadCollection
-            detailViewController?.loadCollection = self.loadCollection
+            detailViewController?.a.loadCollection = self.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
             
@@ -342,7 +342,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
    
         if indexPath.section == 1 {
-            detailViewController?.selectedLoadIndex = indexPath.row
+            detailViewController?.a.selectedLoadIndex = indexPath.row
         }
         
         if indexPath.section == 1{// && detailViewController?.segControl.selectedSegmentIndex == 1{
@@ -365,8 +365,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         }else if section == 1{
             theRowCount = self.loadCollection.count
         }
-        
-        return theRowCount
+            return theRowCount
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -377,7 +376,10 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             title = "LOAD LIST"
         }
         return title
+   
     }
+    
+   
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
@@ -424,9 +426,9 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             
                 
                 loadCell.loadDescription!.text = self.loadCollection[indexPath.row].loadDescription
-                loadCell.loadType!.text = self.loadCollection[indexPath.row].loadType.rawValue
+                loadCell.loadType.text = self.loadCollection[indexPath.row].loadType
             
-            if loadCollection[indexPath.row].loadType == loadTypeEnum.linearUp{
+            if loadCollection[indexPath.row].loadType == loadTypeEnum.linearUp.rawValue{
                 loadCell.loadValue!.text = "\(self.loadCollection[indexPath.row].loadValue2) kips"
             }else{
                 loadCell.loadValue!.text = "\(self.loadCollection[indexPath.row].loadValue) kips"
@@ -476,7 +478,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         theTable.reloadData()
         
         //update the beamdata in the detailView
-        detailViewController?.beam = self.BeamGeo
+        detailViewController?.a.BeamGeo = self.BeamGeo
         
         //check the loads for any need to update
         
@@ -488,11 +490,11 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         //update the loads with the new beam data
         
-        for i:Int in 0 ..< loadCollection.count{
-            loadCollection[i].loadGraphPointCollection(self.BeamGeo)
-        } //end for
+//        for i:Int in 0 ..< loadCollection.count{
+//            loadCollection[i].loadGraphPointCollection(self.BeamGeo)
+//        } //end for
         
-        detailViewController?.loadCollection = self.loadCollection
+        detailViewController?.a.loadCollection = self.loadCollection
         
         detailViewController?.updateGraphs()
     }
@@ -503,8 +505,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         self.loadCollection[indexOfLoad] = returnLoad
         
-        //update the load with the new beam data
-        loadCollection[indexOfLoad].loadGraphPointCollection(self.BeamGeo)
+//        //update the load with the new beam data
+//        loadCollection[indexOfLoad].loadGraphPointCollection(self.BeamGeo)
         
         detailViewController?.updateGraphs()
         theTable.reloadData()
@@ -515,7 +517,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     func checkAndModifyLoadAgainstBeamGeo(_ theLoad:MWLoadData)->MWLoadData{
         
         
-        if theLoad.loadType == loadTypeEnum.concentrated{
+        if theLoad.loadType == loadTypeEnum.concentrated.rawValue{
             if theLoad.loadStart > self.BeamGeo.length{
                 theLoad.loadStart = self.BeamGeo.length - 0.10
             }

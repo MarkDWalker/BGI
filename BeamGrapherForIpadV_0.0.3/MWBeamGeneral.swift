@@ -36,99 +36,99 @@ enum loadTypeEnum:String{
 
 
 
-class MWLoadData:NSObject{
-    var loadDescription:String = "theload"
-    var loadValue:Double = 1
-    var loadValue2:Double = 0
-    var loadType:loadTypeEnum = .concentrated
-    var loadStart:Double = 0.0
-    var loadEnd:Double = 0.0
-    var graphPointCollection=[CGPoint]()
-    //var maxYInGraph:Double = 0
-    var beamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 1, theE: 1600, theI: 200)
-    
-    override init(){
-        
-    }
-    
-    init(theDescription:String, theLoadValue:Double, theLoadType:loadTypeEnum, theLoadStart:Double, theLoadEnd:Double, theBeamGeo:MWBeamGeometry){
-        super.init()
-        loadValue = theLoadValue
-        loadType = theLoadType
-        loadStart = theLoadStart
-        loadEnd = theLoadEnd
-        beamGeo = theBeamGeo
-        
-        loadGraphPointCollection(theBeamGeo)
-       
-        
-    } // end init
-    
-    func getMaxYInGraph()->Double{
-        //find the max y graph point value
-        var tempMaxY:Double = 0
-        for i:Int in 0 ..< graphPointCollection.count{
-            if Double(graphPointCollection[i].y) > tempMaxY {
-                tempMaxY = Double(graphPointCollection[i].y)
-            }//end if
-            
-        }//end for
-        
-        return tempMaxY
-    }
-    
-    
-    //same as init, but used to add the data after the init
-    func addValues(_ theDescription:String, theLoadValue:Double, theLoadType:loadTypeEnum, theLoadStart:Double, theLoadEnd:Double, theBeamGeo:MWBeamGeometry){
-        loadDescription = theDescription
-        loadValue = theLoadValue
-        loadType = theLoadType
-        loadStart = theLoadStart
-        loadEnd = theLoadEnd
-        beamGeo = theBeamGeo
-        
-        loadGraphPointCollection(theBeamGeo)
-        
-        
-    } // end add values
-
-    
-    func loadGraphPointCollection(_ beamGeo:MWBeamGeometry){
-        if loadType == .concentrated{
-graphPointCollection.removeAll()
-            
-            let startPoint = CGPoint(x: loadStart, y: loadValue)
-            graphPointCollection.append(startPoint)
-            let endPoint = CGPoint(x: loadStart, y: 0.00)
-            graphPointCollection.append(endPoint)
-            
-        }else if loadType == .uniform{
-graphPointCollection.removeAll()
-            let P1 = CGPoint(x: loadStart, y: 0)
-            let P2 = CGPoint(x: loadStart, y: loadValue)
-            let P3 = CGPoint(x: loadEnd , y: loadValue)
-            let P4 = CGPoint(x: loadEnd, y: 0)
-            graphPointCollection.append(P1)
-            graphPointCollection.append(P2)
-            graphPointCollection.append(P3)
-            graphPointCollection.append(P4)
-            
-        }else if loadType == .linearUp || loadType == .linearDown {
-         graphPointCollection.removeAll()
-            let P1 = CGPoint(x: loadStart, y: 0)
-            let P2 = CGPoint(x: loadStart, y: loadValue)
-            let P3 = CGPoint(x: loadEnd, y: loadValue2)
-            let P4 = CGPoint(x: loadEnd, y: 0)
-            graphPointCollection.append(P1)
-            graphPointCollection.append(P2)
-            graphPointCollection.append(P3)
-            graphPointCollection.append(P4)
-        }//end if
-        
-        
-    }//end function
-    
-}//end class
+//class MWLoadData:NSObject{
+//    var loadDescription:String = "theload"
+//    var loadValue:Double = 1
+//    var loadValue2:Double = 0
+//    var loadType:loadTypeEnum = .concentrated
+//    var loadStart:Double = 0.0
+//    var loadEnd:Double = 0.0
+//    var graphPointCollection=[CGPoint]()
+//    //var maxYInGraph:Double = 0
+//    var beamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 1, theE: 1600, theI: 200)
+//    
+//    override init(){
+//        
+//    }
+//    
+//    init(theDescription:String, theLoadValue:Double, theLoadType:loadTypeEnum, theLoadStart:Double, theLoadEnd:Double, theBeamGeo:MWBeamGeometry){
+//        super.init()
+//        loadValue = theLoadValue
+//        loadType = theLoadType
+//        loadStart = theLoadStart
+//        loadEnd = theLoadEnd
+//        beamGeo = theBeamGeo
+//        
+//        loadGraphPointCollection(theBeamGeo)
+//       
+//        
+//    } // end init
+//    
+//    func getMaxYInGraph()->Double{
+//        //find the max y graph point value
+//        var tempMaxY:Double = 0
+//        for i:Int in 0 ..< graphPointCollection.count{
+//            if Double(graphPointCollection[i].y) > tempMaxY {
+//                tempMaxY = Double(graphPointCollection[i].y)
+//            }//end if
+//            
+//        }//end for
+//        
+//        return tempMaxY
+//    }
+//    
+//    
+//    //same as init, but used to add the data after the init
+//    func addValues(_ theDescription:String, theLoadValue:Double, theLoadType:loadTypeEnum, theLoadStart:Double, theLoadEnd:Double, theBeamGeo:MWBeamGeometry){
+//        loadDescription = theDescription
+//        loadValue = theLoadValue
+//        loadType = theLoadType
+//        loadStart = theLoadStart
+//        loadEnd = theLoadEnd
+//        beamGeo = theBeamGeo
+//        
+//        loadGraphPointCollection(theBeamGeo)
+//        
+//        
+//    } // end add values
+//
+//    
+//    func loadGraphPointCollection(_ beamGeo:MWBeamGeometry){
+//        if loadType == .concentrated{
+//graphPointCollection.removeAll()
+//            
+//            let startPoint = CGPoint(x: loadStart, y: loadValue)
+//            graphPointCollection.append(startPoint)
+//            let endPoint = CGPoint(x: loadStart, y: 0.00)
+//            graphPointCollection.append(endPoint)
+//            
+//        }else if loadType == .uniform{
+//graphPointCollection.removeAll()
+//            let P1 = CGPoint(x: loadStart, y: 0)
+//            let P2 = CGPoint(x: loadStart, y: loadValue)
+//            let P3 = CGPoint(x: loadEnd , y: loadValue)
+//            let P4 = CGPoint(x: loadEnd, y: 0)
+//            graphPointCollection.append(P1)
+//            graphPointCollection.append(P2)
+//            graphPointCollection.append(P3)
+//            graphPointCollection.append(P4)
+//            
+//        }else if loadType == .linearUp || loadType == .linearDown {
+//         graphPointCollection.removeAll()
+//            let P1 = CGPoint(x: loadStart, y: 0)
+//            let P2 = CGPoint(x: loadStart, y: loadValue)
+//            let P3 = CGPoint(x: loadEnd, y: loadValue2)
+//            let P4 = CGPoint(x: loadEnd, y: 0)
+//            graphPointCollection.append(P1)
+//            graphPointCollection.append(P2)
+//            graphPointCollection.append(P3)
+//            graphPointCollection.append(P4)
+//        }//end if
+//        
+//        
+//    }//end function
+//    
+//}//end class
 
 enum calcTypeEnum:String{
     case shear = "Shear"

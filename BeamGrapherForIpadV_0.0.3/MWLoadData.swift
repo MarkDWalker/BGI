@@ -20,77 +20,78 @@ class MWLoadData:NSObject, NSCoding{
     var beamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 1, theE: 1600, theI: 105.47)
     
     
-    //calculated variable, i.e.readonly - not anymore
-    var graphPointCollection = [CGPoint]()
-//        var returnCollection = [CGPoint]()
-//        
-//        if loadType == "concentrated"{
-//            let startPoint = CGPoint(x: loadStart, y: loadValue)
-//            returnCollection.append(startPoint)
-//            let endPoint = CGPoint(x: loadStart, y: 0.00)
-//            returnCollection.append(endPoint)
-//            
-//        }else if loadType=="uniform"{
-//            returnCollection.removeAll()
-//            let P1 = CGPoint(x: loadStart, y: 0)
-//            let P2 = CGPoint(x: loadStart, y: loadValue)
-//            let P3 = CGPoint(x: loadEnd , y: loadValue)
-//            let P4 = CGPoint(x: loadEnd, y: 0)
-//            returnCollection.append(P1)
-//            returnCollection.append(P2)
-//            returnCollection.append(P3)
-//            returnCollection.append(P4)
-//            
-//        }else if loadType == "linearup" || loadType == "lineardown"{
-//            returnCollection.removeAll()
-//            let P1 = CGPoint(x: loadStart, y: 0)
-//            let P2 = CGPoint(x: loadStart, y: loadValue)
-//            let P3 = CGPoint(x: loadEnd, y: loadValue2)
-//            let P4 = CGPoint(x: loadEnd, y: 0)
-//            returnCollection.append(P1)
-//            returnCollection.append(P2)
-//            returnCollection.append(P3)
-//            returnCollection.append(P4)
-//        }//end if
-//        
-//        return returnCollection
-//    }
-   
+    //calculated variable, i.e.readonly
+    var graphPointCollection:[CGPoint]{
+        var returnCollection = [CGPoint]()
         
-        func loadGraphPointCollection(_ beamGeo:MWBeamGeometry){
-                    if loadType == loadTypeEnum.concentrated.rawValue{
-            graphPointCollection.removeAll()
+        if loadType == "Concentrated"{
+            let startPoint = CGPoint(x: loadStart, y: loadValue)
+            returnCollection.append(startPoint)
+            let endPoint = CGPoint(x: loadStart, y: 0.00)
+            returnCollection.append(endPoint)
             
-                        let startPoint = CGPoint(x: loadStart, y: loadValue)
-                        graphPointCollection.append(startPoint)
-                        let endPoint = CGPoint(x: loadStart, y: 0.00)
-                        graphPointCollection.append(endPoint)
+        }else if loadType=="Uniform"{
+            returnCollection.removeAll()
+            let P1 = CGPoint(x: loadStart, y: 0)
+            let P2 = CGPoint(x: loadStart, y: loadValue)
+            let P3 = CGPoint(x: loadEnd , y: loadValue)
+            let P4 = CGPoint(x: loadEnd, y: 0)
+            returnCollection.append(P1)
+            returnCollection.append(P2)
+            returnCollection.append(P3)
+            returnCollection.append(P4)
             
-                    }else if loadType == loadTypeEnum.uniform.rawValue{
-            graphPointCollection.removeAll()
-                        let P1 = CGPoint(x: loadStart, y: 0)
-                        let P2 = CGPoint(x: loadStart, y: loadValue)
-                        let P3 = CGPoint(x: loadEnd , y: loadValue)
-                        let P4 = CGPoint(x: loadEnd, y: 0)
-                        graphPointCollection.append(P1)
-                        graphPointCollection.append(P2)
-                        graphPointCollection.append(P3)
-                        graphPointCollection.append(P4)
-            
-                    }else if loadType == loadTypeEnum.linearUp.rawValue || loadType == loadTypeEnum.linearDown.rawValue {
-                     graphPointCollection.removeAll()
-                        let P1 = CGPoint(x: loadStart, y: 0)
-                        let P2 = CGPoint(x: loadStart, y: loadValue)
-                        let P3 = CGPoint(x: loadEnd, y: loadValue2)
-                        let P4 = CGPoint(x: loadEnd, y: 0)
-                        graphPointCollection.append(P1)
-                        graphPointCollection.append(P2)
-                        graphPointCollection.append(P3)
-                        graphPointCollection.append(P4)
-                    }//end if
-                    
-                    
-                }//end function
+        }else if loadType == "Linear Up" || loadType == "Linear Down"{
+            returnCollection.removeAll()
+            let P1 = CGPoint(x: loadStart, y: 0)
+            let P2 = CGPoint(x: loadStart, y: loadValue)
+            let P3 = CGPoint(x: loadEnd, y: loadValue2)
+            let P4 = CGPoint(x: loadEnd, y: 0)
+            returnCollection.append(P1)
+            returnCollection.append(P2)
+            returnCollection.append(P3)
+            returnCollection.append(P4)
+        }//end if
+        
+        return returnCollection
+    }
+    
+
+        
+//        func loadGraphPointCollection(_ beamGeo:MWBeamGeometry){
+//                    if loadType == loadTypeEnum.concentrated.rawValue{
+//            graphPointCollection.removeAll()
+//            
+//                        let startPoint = CGPoint(x: loadStart, y: loadValue)
+//                        graphPointCollection.append(startPoint)
+//                        let endPoint = CGPoint(x: loadStart, y: 0.00)
+//                        graphPointCollection.append(endPoint)
+//            
+//                    }else if loadType == loadTypeEnum.uniform.rawValue{
+//            graphPointCollection.removeAll()
+//                        let P1 = CGPoint(x: loadStart, y: 0)
+//                        let P2 = CGPoint(x: loadStart, y: loadValue)
+//                        let P3 = CGPoint(x: loadEnd , y: loadValue)
+//                        let P4 = CGPoint(x: loadEnd, y: 0)
+//                        graphPointCollection.append(P1)
+//                        graphPointCollection.append(P2)
+//                        graphPointCollection.append(P3)
+//                        graphPointCollection.append(P4)
+//            
+//                    }else if loadType == loadTypeEnum.linearUp.rawValue || loadType == loadTypeEnum.linearDown.rawValue {
+//                     graphPointCollection.removeAll()
+//                        let P1 = CGPoint(x: loadStart, y: 0)
+//                        let P2 = CGPoint(x: loadStart, y: loadValue)
+//                        let P3 = CGPoint(x: loadEnd, y: loadValue2)
+//                        let P4 = CGPoint(x: loadEnd, y: 0)
+//                        graphPointCollection.append(P1)
+//                        graphPointCollection.append(P2)
+//                        graphPointCollection.append(P3)
+//                        graphPointCollection.append(P4)
+//                    }//end if
+//                    
+//                    
+//                }//end function
     
     
     

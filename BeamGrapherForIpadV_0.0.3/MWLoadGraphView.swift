@@ -242,11 +242,11 @@ class MWLoadGraphView: UIView {
         }//end for
         
         //do some special things for different load types
-        if loadCollection[thei].loadType == loadTypeEnum.uniform || loadCollection[thei].loadType == loadTypeEnum.linearUp || loadCollection[thei].loadType == loadTypeEnum.linearDown{
+        if loadCollection[thei].loadType == loadTypeEnum.uniform.rawValue || loadCollection[thei].loadType == loadTypeEnum.linearUp.rawValue || loadCollection[thei].loadType == loadTypeEnum.linearDown.rawValue{
             
-        yPath[thei].close()//close the shape for the uniform loads
+        self.yPath[thei].close()//close the shape for the uniform loads
             
-        }else if loadCollection[thei].loadType == loadTypeEnum.concentrated{
+        }else if loadCollection[thei].loadType == loadTypeEnum.concentrated.rawValue{
             let xTemp:Double = Double(xPad/2) + (Double(dataCollection[1].x) * Xscale) - 10
             let yTemp:Double = (Double(dataCollection[1].y)*Yscale) + yAdjustment - (thePrevLoadsYs * Yscale) - 10
             let ptTemp:CGPoint = CGPoint(x: xTemp, y: yTemp)

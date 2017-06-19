@@ -29,22 +29,22 @@ class ViewController_EditLoad: UIViewController {
     
     
     func setLoadTypeSwitch(){
-        if theLoad.loadType == loadTypeEnum.concentrated{
+        if theLoad.loadType == loadTypeEnum.concentrated.rawValue{
             switch_Concentrated.setOn(true, animated:true)
             switch_Uniform.setOn(false, animated: true)
             switch_LinearUp.setOn(false, animated: true)
             switch_LinearDown.setOn(false, animated: true)
-        }else if theLoad.loadType == loadTypeEnum.uniform{
+        }else if theLoad.loadType == loadTypeEnum.uniform.rawValue{
             self.switch_Concentrated.setOn(false, animated:true)
             switch_Uniform.setOn(true, animated: true)
             switch_LinearUp.setOn(false, animated: true)
             switch_LinearDown.setOn(false, animated: true)
-        }else if theLoad.loadType == loadTypeEnum.linearUp{
+        }else if theLoad.loadType == loadTypeEnum.linearUp.rawValue{
             switch_Concentrated.setOn(false, animated:true)
             switch_Uniform.setOn(false, animated: true)
             switch_LinearUp.setOn(true, animated: true)
             switch_LinearDown.setOn(false, animated: true)
-        }else if theLoad.loadType == loadTypeEnum.linearDown{
+        }else if theLoad.loadType == loadTypeEnum.linearDown.rawValue{
             switch_Concentrated.setOn(false, animated:true)
             switch_Uniform.setOn(false, animated: true)
             switch_LinearUp.setOn(false, animated: true)
@@ -58,7 +58,7 @@ class ViewController_EditLoad: UIViewController {
         
         tv_Description.text = theLoad.loadDescription
         
-        if theLoad.loadType == loadTypeEnum.linearUp{
+        if theLoad.loadType == loadTypeEnum.linearUp.rawValue{
             tv_LoadValue.text = "\(theLoad.loadValue2)"
         }else{
             tv_LoadValue.text = "\(theLoad.loadValue)"
@@ -87,7 +87,7 @@ class ViewController_EditLoad: UIViewController {
         theLoad.loadDescription = tv_Description.text!
         
         //check the value of tv_LoadValue
-        if theLoad.loadType == loadTypeEnum.linearUp{
+        if theLoad.loadType == loadTypeEnum.linearUp.rawValue{
             theLoad.loadValue = 0
             theLoad.loadValue2 = myNums.txtToD(tv_LoadValue.text!)
         }else{
@@ -108,28 +108,28 @@ class ViewController_EditLoad: UIViewController {
     }
 
     @IBAction func click_C(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum.concentrated
+        theLoad.loadType = loadTypeEnum.concentrated.rawValue
         setLoadTypeSwitch()
         
         self.tv_EndLocation.text = "\(0)"
     }
     
     @IBAction func click_U(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum.uniform
+        theLoad.loadType = loadTypeEnum.uniform.rawValue
         setLoadTypeSwitch()
         
         self.tv_EndLocation.text = "\(self.theBeam.length)"
     }
     
     @IBAction func click_LUp(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum(rawValue: loadTypeEnum.linearUp.rawValue)!
+        theLoad.loadType = loadTypeEnum.linearUp.rawValue
         setLoadTypeSwitch()
          self.tv_EndLocation.text = "\(self.theBeam.length)"
     }
     
     
     @IBAction func click_LD(_ sender: AnyObject) {
-        theLoad.loadType = loadTypeEnum(rawValue: loadTypeEnum.linearDown.rawValue)!
+        theLoad.loadType = loadTypeEnum.linearDown.rawValue
         setLoadTypeSwitch()
          self.tv_EndLocation.text = "\(self.theBeam.length)"
     }

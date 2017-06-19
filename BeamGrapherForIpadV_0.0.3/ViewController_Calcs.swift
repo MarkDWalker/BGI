@@ -216,8 +216,8 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
         let i:Int = loadNumber
         
         let description:String = loadCollection[i].loadDescription
-        let type:loadTypeEnum  = loadTypeEnum(rawValue: loadCollection[i].loadType.rawValue)!
-        let typeString:String = loadCollection[i].loadType.rawValue
+        let type:loadTypeEnum  = loadTypeEnum(rawValue: loadCollection[i].loadType)!
+        let typeString:String = loadCollection[i].loadType
         var value:Double = 0
         
         if type == loadTypeEnum.linearUp{

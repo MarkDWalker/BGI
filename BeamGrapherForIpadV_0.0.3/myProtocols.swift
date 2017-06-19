@@ -21,3 +21,7 @@ protocol MyEditLoadDelegator{
     func updateLoad(_ load:MWLoadData, indexOfLoad:Int)
 }
 
+protocol DesignTypeDisplayer{
+    func updateDesignTypeDisplay(theType:String)
+}
+

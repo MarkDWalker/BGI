@@ -37,31 +37,31 @@ class MWStructuralEquations:NSObject{
     func performCalc(_ location:Double)->Double{
         var returnValue:Double = 0
         
-        if calcType == .shear && Load.loadType == .uniform{
+        if calcType == .shear && Load.loadType == loadTypeEnum.uniform.rawValue{
             returnValue = -uniformLoadShear(location)
             
-        }else if calcType == .moment && Load.loadType == .uniform{
+        }else if calcType == .moment && Load.loadType == loadTypeEnum.uniform.rawValue{
             returnValue = uniformLoadMoment(location)
             
-        }else if calcType == .deflection && Load.loadType == .uniform{
+        }else if calcType == .deflection && Load.loadType == loadTypeEnum.uniform.rawValue{
             returnValue = uniformLoadDeflection(location)//, E:BeamGeo.E, I: BeamGeo.I)
             
-        }else if calcType == .shear && Load.loadType == .concentrated{
+        }else if calcType == .shear && Load.loadType == loadTypeEnum.concentrated.rawValue{
             returnValue = -concentratedLoadShear(location)
             
-        }else if calcType == .moment && Load.loadType == .concentrated{
+        }else if calcType == .moment && Load.loadType == loadTypeEnum.concentrated.rawValue{
             returnValue = concentratedLoadMoment(location)
             
-        }else if calcType == .deflection && Load.loadType == .concentrated{
+        }else if calcType == .deflection && Load.loadType == loadTypeEnum.concentrated.rawValue{
             returnValue = concentratedLoadDeflection(location, E:BeamGeo.E, I: BeamGeo.I)
             
-        }else if calcType == .shear && (Load.loadType == .linearUp || Load.loadType == .linearDown){
+        }else if calcType == .shear && (Load.loadType == loadTypeEnum.linearUp.rawValue || Load.loadType == loadTypeEnum.linearDown.rawValue){
             returnValue =  -linearLoadShear(location)
             
-        }else if calcType == .moment && (Load.loadType == .linearUp || Load.loadType == .linearDown){
+        }else if calcType == .moment && (Load.loadType == loadTypeEnum.linearUp.rawValue || Load.loadType == loadTypeEnum.linearDown.rawValue){
             returnValue = linearLoadMoment(location)
             
-        }else if calcType == .deflection && (Load.loadType == .linearUp || Load.loadType == .linearDown){
+        }else if calcType == .deflection && (Load.loadType == loadTypeEnum.linearUp.rawValue || Load.loadType == loadTypeEnum.linearDown.rawValue){
             returnValue = linearLoadDeflection(location, E:BeamGeo.E, I:BeamGeo.I)
         }
         
