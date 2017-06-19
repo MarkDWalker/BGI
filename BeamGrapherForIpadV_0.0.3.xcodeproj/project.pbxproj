@@ -12,8 +12,8 @@
 		983E912A1EF3170800CDCD79 /* MWBeamForceUnits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983E91291EF3170800CDCD79 /* MWBeamForceUnits.swift */; };
 		983E912C1EF3242300CDCD79 /* MWBeamGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983E912B1EF3242300CDCD79 /* MWBeamGeometry.swift */; };
 		984FC32B1EF5DBF10005A287 /* vc_WoodBeamDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FC32A1EF5DBF10005A287 /* vc_WoodBeamDesign.swift */; };
-		984FC32E1EF5F6D00005A287 /* CustomCell_SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FC32D1EF5F6D00005A287 /* CustomCell_SectionData.swift */; };
 		984FC3301EF5FC570005A287 /* CustomCell_TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FC32F1EF5FC570005A287 /* CustomCell_TitleCell.swift */; };
+		985B0DE11EF7621A00DE9F23 /* CustomCell_SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */; };
 		9863074E1EF362FC00948D08 /* MWStructuralEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863074D1EF362FC00948D08 /* MWStructuralEquations.swift */; };
 		989EA1C81EF6062D002A702E /* MWWoodSectionDesignData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1C71EF6062D002A702E /* MWWoodSectionDesignData.swift */; };
 		989EA1CA1EF619C0002A702E /* CustomCell_GradeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */; };
@@ -36,6 +36,7 @@
 		989EA1EF1EF6B3BA002A702E /* steelGradeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1EE1EF6B3BA002A702E /* steelGradeEnum.swift */; };
 		989EA1F11EF6B3E9002A702E /* LVLGradeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1F01EF6B3E9002A702E /* LVLGradeEnum.swift */; };
 		989EA1F31EF6B4A8002A702E /* LVLManufacturerEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1F21EF6B4A8002A702E /* LVLManufacturerEnum.swift */; };
+		98D874081EF772C800A879E0 /* CustomCell_WoodGradeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D874071EF772C800A879E0 /* CustomCell_WoodGradeHeader.swift */; };
 		A7125F8B1B49C212002B1988 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7125F8A1B49C212002B1988 /* Images-2.xcassets */; };
 		A72942A21B23104500A5938E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72942A11B23104500A5938E /* AppDelegate.swift */; };
 		A72942A41B23104500A5938E /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72942A31B23104500A5938E /* MasterViewController.swift */; };
@@ -80,8 +81,8 @@
 		983E91291EF3170800CDCD79 /* MWBeamForceUnits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWBeamForceUnits.swift; sourceTree = "<group>"; };
 		983E912B1EF3242300CDCD79 /* MWBeamGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWBeamGeometry.swift; sourceTree = "<group>"; };
 		984FC32A1EF5DBF10005A287 /* vc_WoodBeamDesign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = vc_WoodBeamDesign.swift; path = BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift; sourceTree = "<group>"; };
-		984FC32D1EF5F6D00005A287 /* CustomCell_SectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_SectionData.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_SectionData.swift; sourceTree = "<group>"; };
 		984FC32F1EF5FC570005A287 /* CustomCell_TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_TitleCell.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_TitleCell.swift; sourceTree = "<group>"; };
+		985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_SectionData.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_SectionData.swift; sourceTree = "<group>"; };
 		9863074D1EF362FC00948D08 /* MWStructuralEquations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWStructuralEquations.swift; sourceTree = "<group>"; };
 		989EA1C71EF6062D002A702E /* MWWoodSectionDesignData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MWWoodSectionDesignData.swift; path = BeamGrapherForIpadV_0.0.3/MWWoodSectionDesignData.swift; sourceTree = "<group>"; };
 		989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_GradeData.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_GradeData.swift; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		989EA1EE1EF6B3BA002A702E /* steelGradeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = steelGradeEnum.swift; path = BeamGrapherForIpadV_0.0.3/steelGradeEnum.swift; sourceTree = "<group>"; };
 		989EA1F01EF6B3E9002A702E /* LVLGradeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LVLGradeEnum.swift; path = BeamGrapherForIpadV_0.0.3/LVLGradeEnum.swift; sourceTree = "<group>"; };
 		989EA1F21EF6B4A8002A702E /* LVLManufacturerEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LVLManufacturerEnum.swift; path = BeamGrapherForIpadV_0.0.3/LVLManufacturerEnum.swift; sourceTree = "<group>"; };
+		98D874071EF772C800A879E0 /* CustomCell_WoodGradeHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_WoodGradeHeader.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_WoodGradeHeader.swift; sourceTree = "<group>"; };
 		A7125F8A1B49C212002B1988 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		A729429C1B23104500A5938E /* BeamGrapherForIpadV_0.0.3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeamGrapherForIpadV_0.0.3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72942A01B23104500A5938E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,8 +169,9 @@
 				989EA1CD1EF61E00002A702E /* MWWoodFactors.swift */,
 				989EA1C71EF6062D002A702E /* MWWoodSectionDesignData.swift */,
 				989EA1CB1EF61B0D002A702E /* MWWoodDesignValues.swift */,
-				984FC32D1EF5F6D00005A287 /* CustomCell_SectionData.swift */,
+				98D874071EF772C800A879E0 /* CustomCell_WoodGradeHeader.swift */,
 				984FC32F1EF5FC570005A287 /* CustomCell_TitleCell.swift */,
+				985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */,
 				989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */,
 			);
 			name = WoodDesign;
@@ -420,11 +423,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				984FC32E1EF5F6D00005A287 /* CustomCell_SectionData.swift in Sources */,
 				989EA1E11EF620FB002A702E /* MWSteelWDesignValues.swift in Sources */,
 				A7C100F81B32E9FB00AA93E6 /* CustomCell_GridData.swift in Sources */,
 				984FC32B1EF5DBF10005A287 /* vc_WoodBeamDesign.swift in Sources */,
 				A72942A61B23104500A5938E /* DetailViewController.swift in Sources */,
+				985B0DE11EF7621A00DE9F23 /* CustomCell_SectionData.swift in Sources */,
 				989EA1D91EF62059002A702E /* MWBeamAnalysis.swift in Sources */,
 				989EA1F11EF6B3E9002A702E /* LVLGradeEnum.swift in Sources */,
 				A7C100F41B32DC7300AA93E6 /* ViewController_DataGrid.swift in Sources */,
@@ -466,6 +469,7 @@
 				981BE1B21EF4B34200CB76B3 /* vc_DesignType.swift in Sources */,
 				A72942CE1B247AFF00A5938E /* myProtocols.swift in Sources */,
 				989EA1E21EF620FB002A702E /* MWSteelWSectionDesignData.swift in Sources */,
+				98D874081EF772C800A879E0 /* CustomCell_WoodGradeHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
