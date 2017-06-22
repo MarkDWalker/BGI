@@ -55,7 +55,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         var rowCount = 0
         if tableView.restorationIdentifier == "sectionTable"{
-            rowCount = 30
+            rowCount = 28
         } else if tableView.restorationIdentifier == "gradeTable"{
             rowCount = 12
         }
@@ -67,19 +67,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //let theSection:Int = indexPath.section
         //let theRow:Int = indexPath.row
-        
         let returnCell = UITableViewCell()
-        
-        guard indexPath.row != 0  else{
-            let cellTitle = tableView.dequeueReusableCell(withIdentifier: "titleCell", for: indexPath) as! CustomCell_TitleCell
-            if tableView.restorationIdentifier == "sectionTable"{
-                cellTitle.titleLabel!.text = "Member Selection"
-            }else if tableView.restorationIdentifier == "gradeTable"{
-                 cellTitle.titleLabel!.text = "Grade Selection"
-            }
-            return cellTitle
-        }
-        
         
         let tempSectionData = MWWoodSectionDesignData()
         let tempGradeData = MWWoodDesignValues()
@@ -106,31 +94,25 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
             
             let row = indexPath.row
             
-            if row == 1 {
-                
-                let Cell3 = gradeTable.dequeueReusableCell(withIdentifier: "woodGradeHeaderCell", for: indexPath) as! CustomCell_WoodGradeHeader
-                
-                return Cell3
-                
-            }else if row == 2 {
+            if row == 0 {
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.denseSelectStructural, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 3{
+            }else if row == 1{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.selectStructural, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 4{
+            }else if row == 2{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.nonDenseSelectStructural, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 5{
+            }else if row == 3{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1Dense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 6{
+            }else if row == 4{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 7{
+            }else if row == 5{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1NonDense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 8{
+            }else if row == 6{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2Dense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 9{
+            }else if row == 7{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 10{
+            }else if row == 8{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2NonDense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 11{
+            }else if row == 9{
                 tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no3AndStud, memberWidth: design.a.selectedWoodSection.depth)
             }
             
