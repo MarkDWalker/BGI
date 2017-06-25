@@ -10,22 +10,36 @@ import UIKit
 
 class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var sectionTable: UITableView!
-    @IBOutlet weak var gradeTable: UITableView!
+    @IBOutlet weak var sectionLabel: UILabel!
+    @IBOutlet weak var gradeLabel: UILabel!
     
+    @IBOutlet weak var factorTable: UITableView!
     
     var design = MWWoodBeamDesign()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        sectionTable.delegate = self
-        sectionTable.dataSource = self
+        
+        factorTable.delegate = self
+        factorTable.dataSource = self
         
         
-        gradeTable.delegate = self
-        gradeTable.dataSource = self
         
+        
+        
+    }
+    
+    private func updateLabels(){
+        
+        var shape = design.a.selectedWoodSection.shape
+        var d = design.a.selectedWoodSection.depth
+        var w = design.a.selectedWoodSection.width
+        var area = design.a.selectedWoodSection.area
+        var I = design.a.selectedWoodSection.I
+        var S = design.a.selectedWoodSection.sectionModulus
+        
+        sectionLabel.text = shape + "  |  w = " + "\(w)" + "  |  d = " + "\(d)" + "  |  a = " + "/(area)" + "  |  I"
+        + "\(I)" + "  |  S = " + "\(S)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,10 +68,8 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var rowCount = 0
-        if tableView.restorationIdentifier == "sectionTable"{
-            rowCount = 28
-        } else if tableView.restorationIdentifier == "gradeTable"{
-            rowCount = 12
+        if tableView.restorationIdentifier == "factorTable"{
+                rowCount = 7
         }
         
         return rowCount
@@ -65,80 +77,63 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //let theSection:Int = indexPath.section
-        //let theRow:Int = indexPath.row
-        let returnCell = UITableViewCell()
+        let returnCell = tableView.cellForRow(at: indexPath)
         
-        let tempSectionData = MWWoodSectionDesignData()
-        let tempGradeData = MWWoodDesignValues()
-        
-       
-        
-        
-        if (tableView.restorationIdentifier == "sectionTable"){
-            let Cell1 = sectionTable.dequeueReusableCell(withIdentifier: "sectionCell", for: indexPath) as! CustomCell_SectionData
-            
-            tempSectionData.setSectionData(indexPath.row)
-            
-            Cell1.sectionLabel!.text = tempSectionData.shape as String
-            Cell1.depthLabel!.text = ("\(tempSectionData.depth)")
-            Cell1.widthLabel.text = ("\(tempSectionData.width)")
-            Cell1.areaLabel.text = ("\(tempSectionData.area)")
-            Cell1.inertiaLabel.text = ("\(tempSectionData.I)")
-            Cell1.modLabel.text = ("\(tempSectionData.sectionModulus)")
-            
-            return Cell1
-            
-       }else if (tableView.restorationIdentifier == "gradeTable"){  //grade Table
-             let Cell2 = gradeTable.dequeueReusableCell(withIdentifier: "gradeCell", for: indexPath) as! CustomCell_GradeData
-            
+        if (tableView.restorationIdentifier == "factorTable"){
+            let Cell3 = factorTable.dequeueReusableCell(withIdentifier: "factorCell", for: indexPath) as! CustomCell_FactorCell
             let row = indexPath.row
             
-            if row == 0 {
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.denseSelectStructural, memberWidth: design.a.selectedWoodSection.depth)
+            if row == 0{
+                Cell3.factorLabel.text = "Cd"
+                Cell3.descriptionLabel.text = "Load Duration Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cd)"
+                Cell3.fvFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cd)"
+                Cell3.eFactorLabel.text = "n/a"
             }else if row == 1{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.selectStructural, memberWidth: design.a.selectedWoodSection.depth)
+                Cell3.factorLabel.text = "Cm"
+                Cell3.descriptionLabel.text = "Wet Service Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.CmFb)"
+                Cell3.fvFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.CmFv)"
+                Cell3.eFactorLabel.text = "n/a"
             }else if row == 2{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.nonDenseSelectStructural, memberWidth: design.a.selectedWoodSection.depth)
+                Cell3.factorLabel.text = "Ct"
+                Cell3.descriptionLabel.text = "Temperature Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.CtFb)"
+                Cell3.fvFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.CtFv)"
+                Cell3.eFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.CtE)"
             }else if row == 3{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1Dense, memberWidth: design.a.selectedWoodSection.depth)
+                Cell3.factorLabel.text = "Cf"
+                Cell3.descriptionLabel.text = "Size Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cf)"
+                Cell3.fvFactorLabel.text = "n/a"
+                Cell3.eFactorLabel.text = "n/a"
             }else if row == 4{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1, memberWidth: design.a.selectedWoodSection.depth)
+                Cell3.factorLabel.text = "Cfu"
+                Cell3.descriptionLabel.text = "Flat Use Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cfu)"
+                Cell3.fvFactorLabel.text = "n/a"
+                Cell3.eFactorLabel.text = "n/a"
             }else if row == 5{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no1NonDense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 6{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2Dense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 7{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 8{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no2NonDense, memberWidth: design.a.selectedWoodSection.depth)
-            }else if row == 9{
-                tempGradeData.setValues(speciesEnum.syp, theGrade: woodGradeEnum.no3AndStud, memberWidth: design.a.selectedWoodSection.depth)
+                Cell3.factorLabel.text = "Cr"
+                Cell3.descriptionLabel.text = "Repetitive Member Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cr)"
+                Cell3.fvFactorLabel.text = "n/a"
+                Cell3.eFactorLabel.text = "n/a"
+            }else if row==6{
+                Cell3.factorLabel.text = "Cl"
+                Cell3.descriptionLabel.text = "Beam Stability Factor"
+                Cell3.fbFactorLabel.text = "\(design.a.selectedWoodDesignValues.wF.Cl)"
+                Cell3.fvFactorLabel.text = "n/a"
+                Cell3.eFactorLabel.text = "n/a"
             }
             
+            return Cell3
             
-            
-            Cell2.gradeLabel.text = tempGradeData.limits.grade.rawValue as String
-            
-            
-            if tempGradeData.limits.species == speciesEnum.syp {
-                Cell2.speciesLabel.text = "SYP"
-            }
-            
-            Cell2.fbLabel.text = ("\(tempGradeData.limits.Fb)")
-            
-            Cell2.fvLabel.text = ("\(tempGradeData.limits.Fv)")
-            
-            Cell2.eLabel.text = ("\(tempGradeData.limits.E)")
-            
-            
-            
-            return  Cell2
         }
     
         
         
-        return returnCell
+        return returnCell!
     }
     
 
