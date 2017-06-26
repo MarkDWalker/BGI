@@ -406,7 +406,7 @@ class MWStructuralEquations:NSObject{
                 returnValue = (p * x1 * (2 * a * l + 3 * a * x1 - x1 * x1)) / (6 * E * I)
                 
             }else if location > s1 && location <= s2{
-                returnValue = (p * a * x * (l * l - x * x)) / (6 * E * I * l)
+                returnValue = -(p * a * x * (l * l - x * x)) / (6 * E * I * l)
                 
                 
             }else if location < s1{
