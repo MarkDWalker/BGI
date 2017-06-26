@@ -10,19 +10,34 @@ import UIKit
 
 class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    @IBOutlet weak var statusBar: MWNSViewForTBStatus!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var gradeLabel: UILabel!
     
     @IBOutlet weak var factorTable: UITableView!
     
+    @IBOutlet weak var stressTable: UITableView!
+    
+    
     var design = MWWoodBeamDesign()
+    var statusColor = UIColor.green
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        design.updateDesignSectionCollections()
+        
+        
+        
+        
         factorTable.delegate = self
         factorTable.dataSource = self
         
+        stressTable.delegate = self
+        stressTable.dataSource = self
+        
+        updateLabels()
         
         
         
@@ -31,16 +46,89 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
     
     private func updateLabels(){
         
-        var shape = design.a.selectedWoodSection.shape
-        var d = design.a.selectedWoodSection.depth
-        var w = design.a.selectedWoodSection.width
-        var area = design.a.selectedWoodSection.area
-        var I = design.a.selectedWoodSection.I
-        var S = design.a.selectedWoodSection.sectionModulus
+        let shape = design.a.selectedWoodSection.shape
+        let d = design.a.selectedWoodSection.depth
+        let w = design.a.selectedWoodSection.width
+        let area = design.a.selectedWoodSection.area
+        let I = design.a.selectedWoodSection.I
+        let S = design.a.selectedWoodSection.sectionModulus
         
-        sectionLabel.text = shape + "  |  w = " + "\(w)" + "  |  d = " + "\(d)" + "  |  a = " + "/(area)" + "  |  I"
-        + "\(I)" + "  |  S = " + "\(S)"
-    }
+        let string1  = (shape as String) + "  |  w = " + "\(w)" + "  |  d = "
+        let string2 = "\(d)" + "  |  a = " + "\(area)" + "  |  I = "
+        let string3 =  "\(I)" + "  |  S = " + "\(S)"
+        
+        sectionLabel.text = string1 + string2 + string3
+        
+        
+        let grade = design.a.selectedWoodDesignValues.limits.grade.rawValue
+        let species = design.a.selectedWoodDesignValues.limits.species.rawValue
+        let fbTab = design.a.selectedWoodDesignValues.limits.Fb
+        let fvTab = design.a.selectedWoodDesignValues.limits.Fv
+        let eTab = design.a.selectedWoodDesignValues.limits.E
+        
+        let string4 = (grade as String) + "  |  " + (species as String) + "  |  Fb = " + "\(fbTab)"
+        let string5 = " psi" + "  |  Fv = " + "\(fvTab)" + " psi  |   E = " + "\(eTab)" + " ksi"
+        
+        gradeLabel.text = string4 + string5
+        
+        
+        
+        //update the status bar
+        let failColor = UIColor.init(red: 1, green: 0, blue: 0, alpha: 0.85)
+        let warningColor = UIColor.init(red: 0.95, green: 0.95, blue: 0.00, alpha: 1)
+        let passColor = UIColor.init(red: 0, green: 0.60, blue: 0.30, alpha: 1)
+        let nullColor = UIColor.clear
+        
+        let stringZ = "\(design.a.BeamGeo.title)  |  "
+        let stringA = "Wood Section   |   "
+        let stringB = design.a.selectedWoodSection.shape as String
+        let stringC = "  |  \(design.a.selectedWoodDesignValues.limits.grade.rawValue) "
+        var statusString =  stringZ + stringA + stringB + stringC
+        
+        
+        if design.woodDesignSectionCollection.count == 0{
+            statusColor = nullColor
+            statusString = "no loads"
+        }else{
+            statusColor = passColor
+            
+            
+            var failCount:Int = 0
+            
+            
+            
+            for i in 0...design.woodDesignSectionCollection.count-1{
+                
+                
+                if design.woodDesignSectionCollection[i].bendingStress * 1000 > design.a.selectedWoodDesignValues.FbAdjust{
+                    statusColor = failColor
+                    failCount += 1
+                }
+                
+                if abs(design.woodDesignSectionCollection[i].shearStress * 1000) >  design.a.selectedWoodDesignValues.FbAdjust{
+                    statusColor = failColor
+                    failCount += 1
+                }
+                
+                if abs(( 12 * design.a.BeamGeo.length) / design.woodDesignSectionCollection[i].deflection) < Double(design.a.selectedWoodDesignValues.limits.deflectionLimit){
+                    if failCount == 0{
+                        statusColor = warningColor
+                    }else{
+                        statusColor = failColor
+                    }
+                }
+                
+            }//end for
+        }
+
+        
+        
+        statusBar.setAndDrawContent(statusString, passColor: statusColor)
+        
+        }
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -69,7 +157,9 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         var rowCount = 0
         if tableView.restorationIdentifier == "factorTable"{
-                rowCount = 7
+            rowCount = 7
+        }else if tableView.restorationIdentifier == "stressTable"{
+            rowCount = design.woodDesignSectionCollection.count
         }
         
         return rowCount
@@ -129,9 +219,74 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
             
             return Cell3
             
-        }
-    
+        }else if (tableView.restorationIdentifier == "stressTable"){
+       
+            let row = indexPath.row
+            let cell = stressTable.dequeueReusableCell(withIdentifier: "stressCell", for: indexPath) as! CustomCell_StressResults
+            
+            cell.pt.text = "\(row)"
+            cell.x.text = NSString(format:"%.2f", design.woodDesignSectionCollection[row].location) as String
+            
+            cell.FbAdjusted.text = NSString(format:"%.2f", design.a.selectedWoodDesignValues.FbAdjust) as String
+            
+            
+            
+            if design.woodDesignSectionCollection[row].bendingStress * 1000 > design.a.selectedWoodDesignValues.FbAdjust{
+                cell.FbAdjusted.textColor = UIColor.red
+                
+            }else{
+                cell.FbAdjusted.textColor = UIColor.blue
+            }
+            
         
+            cell.fbActual.text = NSString(format:"%.2f",design.woodDesignSectionCollection[row].bendingStress * 1000) as String
+            if design.woodDesignSectionCollection[row].bendingStress * 1000 > design.a.selectedWoodDesignValues.FbAdjust{
+                cell.fbActual.textColor = UIColor.red
+            }else{
+                cell.fbActual.textColor = UIColor.blue
+            }
+
+            cell.FvAdjusted.text = NSString(format:"%.2f",design.a.selectedWoodDesignValues.FvAdjust) as String
+            if abs(design.woodDesignSectionCollection[row].shearStress * 1000) > design.a.selectedWoodDesignValues.FvAdjust{
+                cell.FvAdjusted.textColor = UIColor.red
+            }else{
+                cell.FvAdjusted.textColor = UIColor.blue
+            }
+            
+            cell.fvActual.text = NSString(format:"%.2f",abs(design.woodDesignSectionCollection[row].shearStress * 1000)) as String
+            if abs(design.woodDesignSectionCollection[row].shearStress * 1000) > design.a.selectedWoodDesignValues.FvAdjust{
+                cell.fvActual.textColor = UIColor.red
+            }else{
+                cell.fvActual.textColor = UIColor.blue
+            }
+            
+            cell.deflection.text = NSString(format:"%.2f", abs(design.woodDesignSectionCollection[row].deflection)) as String
+            
+            if abs(( 12 * design.a.BeamGeo.length) / design.woodDesignSectionCollection[row].deflection) < Double(design.a.selectedWoodDesignValues.limits.deflectionLimit){
+                cell.deflection.textColor = UIColor.red
+            }else{
+                cell.deflection.textColor = UIColor.blue
+            }
+            
+            
+            
+            let dRatio:Double = (design.a.BeamGeo.length * 12) / (abs(design.woodDesignSectionCollection[row].deflection))
+            if dRatio > 10000{
+                cell.dRatio.text = "NA"
+            }else{
+                cell.dRatio.text = NSString(format:"%.2f", dRatio) as String
+            }
+            
+            if abs((12 * design.a.BeamGeo.length) / design.woodDesignSectionCollection[row].deflection) < Double(design.a.selectedWoodDesignValues.limits.deflectionLimit){
+                cell.dRatio.textColor = UIColor.red
+            }else{
+                cell.dRatio.textColor = UIColor.blue
+            }
+            
+            
+            return cell
+        
+        }
         
         return returnCell!
     }

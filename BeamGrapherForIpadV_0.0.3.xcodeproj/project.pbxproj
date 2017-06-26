@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98012C701F002B3E00FAB6B5 /* CustomCell_StressResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */; };
+		98012C721F0035C700FAB6B5 /* MWNSViewForTBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98012C711F0035C700FAB6B5 /* MWNSViewForTBStatus.swift */; };
 		981BE1B21EF4B34200CB76B3 /* vc_DesignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981BE1B11EF4B34200CB76B3 /* vc_DesignType.swift */; };
 		9825B85C1EFBE5390017930E /* CustomCell_WoodFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9825B85B1EFBE5390017930E /* CustomCell_WoodFactor.swift */; };
 		983E91281EF316FD00CDCD79 /* MWTextFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983E91271EF316FD00CDCD79 /* MWTextFormatHelper.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_StressResults.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_StressResults.swift; sourceTree = "<group>"; };
+		98012C711F0035C700FAB6B5 /* MWNSViewForTBStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWNSViewForTBStatus.swift; sourceTree = "<group>"; };
 		981BE1B11EF4B34200CB76B3 /* vc_DesignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vc_DesignType.swift; sourceTree = "<group>"; };
 		9825B85B1EFBE5390017930E /* CustomCell_WoodFactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell_WoodFactor.swift; sourceTree = "<group>"; };
 		983E91271EF316FD00CDCD79 /* MWTextFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWTextFormatHelper.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 				985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */,
 				989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */,
 				98F97FC51EFD849B0023BE17 /* CustomCell_FactorCell.swift */,
+				98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */,
 			);
 			name = WoodDesign;
 			path = ..;
@@ -237,6 +242,7 @@
 		A729429E1B23104500A5938E /* BeamGrapherForIpadV_0.0.3 */ = {
 			isa = PBXGroup;
 			children = (
+				98012C711F0035C700FAB6B5 /* MWNSViewForTBStatus.swift */,
 				989EA1EC1EF6B37C002A702E /* MWLoadData.swift */,
 				A72942A71B23104500A5938E /* Main.storyboard */,
 				9825B85B1EFBE5390017930E /* CustomCell_WoodFactor.swift */,
@@ -449,6 +455,7 @@
 				989EA1DA1EF62059002A702E /* MWWoodLoadedDesignSection.swift in Sources */,
 				A74E530D1B2710AC003D9E98 /* MWBeamGeneral.swift in Sources */,
 				A72942C81B24607000A5938E /* CustomCell_BeamData.swift in Sources */,
+				98012C721F0035C700FAB6B5 /* MWNSViewForTBStatus.swift in Sources */,
 				A72942A41B23104500A5938E /* MasterViewController.swift in Sources */,
 				989EA1E01EF620FB002A702E /* MWLVLSectionDesignData.swift in Sources */,
 				989EA1EF1EF6B3BA002A702E /* steelGradeEnum.swift in Sources */,
@@ -472,6 +479,7 @@
 				A74E53091B26FF12003D9E98 /* CustomCell_LoadData.swift in Sources */,
 				989EA1E91EF6B19B002A702E /* MWSteelFactors.swift in Sources */,
 				9863074E1EF362FC00948D08 /* MWStructuralEquations.swift in Sources */,
+				98012C701F002B3E00FAB6B5 /* CustomCell_StressResults.swift in Sources */,
 				98F97FC81EFE88D20023BE17 /* vc_WoodMemberSelection.swift in Sources */,
 				989EA1CC1EF61B0D002A702E /* MWWoodDesignValues.swift in Sources */,
 				A74E53131B2869EB003D9E98 /* MWBeamGraphView.swift in Sources */,

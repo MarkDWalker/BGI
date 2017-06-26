@@ -22,7 +22,7 @@ class MWWoodSectionDesignData:NSObject, NSCoding{
     var width:Double = 3.0 //value in inches
     var area:Double = 22.5 //value in inches^2
     var sectionModulus:Double = 28.13 //value in inches^3
-    var I:Double = 1
+    var I:Double = 105.46
     var vArea:Double  = 1//value for shear calculation
     
     var selectedShapeIndex:Int = 7

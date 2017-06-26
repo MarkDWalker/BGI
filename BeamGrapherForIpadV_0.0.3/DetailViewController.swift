@@ -176,6 +176,7 @@ class DetailViewController: UIViewController,DesignTypeDisplayer{
     @IBAction func designBtn_Click(_ sender: Any) {
         let vcWoodDesign = storyboard?.instantiateViewController(withIdentifier: "vcWoodDesign") as! vc_WoodBeamDesign
         
+        vcWoodDesign.design.a = self.a
         
         self.present(vcWoodDesign, animated: true, completion: nil)
         

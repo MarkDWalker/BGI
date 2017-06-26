@@ -54,11 +54,12 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
 
     
     //for the beam
-    var BeamGeo:MWBeamGeometry = MWBeamGeometry(theLength: 10.00, theE: 1600.00, theI: 200.00)
+    
     
     //for the loads
     var cLoad:MWLoadData = MWLoadData()
-    var loadCollection = [MWLoadData]()
+    
+    var a = MWBeamAnalysis()
     
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -85,15 +86,15 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         
         //add the initial values to the load - cLoad
-        cLoad.addValues("L1", theLoadValue: 2, theLoadType: loadTypeEnum.concentrated.rawValue, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        cLoad.addValues("L1", theLoadValue: 2, theLoadType: loadTypeEnum.concentrated.rawValue, theLoadStart: 3, theLoadEnd: 0, theBeamGeo: a.BeamGeo)
         
         //add cLoad to the load Collection
-        loadCollection.append(cLoad)
+        a.loadCollection.append(cLoad)
         
         
         
-        detailViewController?.a.BeamGeo = self.BeamGeo
-        detailViewController?.a.loadCollection = self.loadCollection
+        detailViewController?.a.BeamGeo = a.BeamGeo
+        detailViewController?.a.loadCollection = a.loadCollection
         
         //select a row in the table to avoid an error
         let indexPath = IndexPath(row: 0, section:1)
@@ -110,25 +111,29 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     
     
     @IBAction func click_AddLoad(_ sender: UIBarButtonItem) {
-        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType:loadTypeEnum.concentrated.rawValue, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: BeamGeo)
+        let newLoad:MWLoadData = MWLoadData(theDescription: "NewLoad", theLoadValue: 2, theLoadType:loadTypeEnum.concentrated.rawValue, theLoadStart: 1, theLoadEnd: 0, theBeamGeo: a.BeamGeo)
         
-        loadCollection.append(newLoad)
+        a.loadCollection.append(newLoad)
+        
+        
         
         theTable.reloadData()
         
-        detailViewController?.a.loadCollection = self.loadCollection
+        detailViewController?.a.loadCollection = self.a.loadCollection
         
         detailViewController?.updateGraphs()
+        
+        
         
     }
 
     @IBAction func click_DeleteLoad(_ sender: UIBarButtonItem) {
         var tempLoadCollection:[MWLoadData] = [MWLoadData]()
         
-        let loadCountBeforeDelete:Int = loadCollection.count
+        let loadCountBeforeDelete:Int = a.loadCollection.count
         
         if loadCountBeforeDelete > 1{
-            tempLoadCollection = self.loadCollection
+            tempLoadCollection = a.loadCollection
             
             //get the selected row index
             let selectedIndexPath = theTable.indexPathForSelectedRow
@@ -138,8 +143,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
                 
             }
             
-            self.loadCollection = tempLoadCollection
-            detailViewController?.a.loadCollection = self.loadCollection
+            a.loadCollection = tempLoadCollection
+            detailViewController?.a.loadCollection = a.loadCollection
             detailViewController?.updateGraphs()
             
             theTable.reloadData()
@@ -174,7 +179,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         if selectedIndexPath?.section == 1 && selectedIndexPath?.row == 0 {
             //don't do anything
             
-        }else if selectedIndexPath?.section == 1 && selectedIndexPath?.row > 0 && selectedIndexPath?.row < loadCollection.count{
+        }else if selectedIndexPath?.section == 1 && selectedIndexPath?.row > 0 && selectedIndexPath?.row < a.loadCollection.count{
             let originalIndex = selectedIndexPath?.row
             let newIndex:Int? = originalIndex! - 1
             
@@ -182,21 +187,21 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             //copy the items up to the change
             
             for i:Int in 0  ..< (newIndex!){
-                tempLoadCollection.append(self.loadCollection[i])
+                tempLoadCollection.append(a.loadCollection[i])
             }
             
             //them swap the two values
-            tempLoadCollection.append(self.loadCollection[originalIndex!])
-            tempLoadCollection.append(self.loadCollection[newIndex!])
+            tempLoadCollection.append(a.loadCollection[originalIndex!])
+            tempLoadCollection.append(a.loadCollection[newIndex!])
             
             //now add the rest of the items
             
-            for j:Int in (originalIndex! + 1) ..< self.loadCollection.count{
-                tempLoadCollection.append(self.loadCollection[j])
+            for j:Int in (originalIndex! + 1) ..< a.loadCollection.count{
+                tempLoadCollection.append(a.loadCollection[j])
             }
             
-            self.loadCollection = tempLoadCollection
-           detailViewController?.a.loadCollection = self.loadCollection
+            a.loadCollection = tempLoadCollection
+           detailViewController?.a.loadCollection = a.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
             
@@ -220,10 +225,10 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         let selectedIndexPath = theTable.indexPathForSelectedRow
       
         
-        if selectedIndexPath?.section == 1 && selectedIndexPath?.row >= self.loadCollection.count - 1 {
+        if selectedIndexPath?.section == 1 && selectedIndexPath?.row >= a.loadCollection.count - 1 {
             //don't do anything
             
-        }else if selectedIndexPath?.section == 1 && selectedIndexPath?.row < self.loadCollection.count && selectedIndexPath?.row >= 0{
+        }else if selectedIndexPath?.section == 1 && selectedIndexPath?.row < a.loadCollection.count && selectedIndexPath?.row >= 0{
             let originalIndex = selectedIndexPath?.row
             let newIndex:Int? = originalIndex! + 1
             
@@ -231,21 +236,21 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             //copy the items up to the change
             
             for i:Int in 0 ... (originalIndex! - 1){
-                tempLoadCollection.append(self.loadCollection[i])
+                tempLoadCollection.append(a.loadCollection[i])
             }
             
             //them swap the two values
-            tempLoadCollection.append(self.loadCollection[newIndex!])
-            tempLoadCollection.append(self.loadCollection[originalIndex!])
+            tempLoadCollection.append(a.loadCollection[newIndex!])
+            tempLoadCollection.append(a.loadCollection[originalIndex!])
             
             //now add the rest of the items
             
-            for j:Int in newIndex! + 1 ..< self.loadCollection.count{
-                tempLoadCollection.append(self.loadCollection[j])
+            for j:Int in newIndex! + 1 ..< a.loadCollection.count{
+                tempLoadCollection.append(a.loadCollection[j])
             }
             
-            self.loadCollection = tempLoadCollection
-            detailViewController?.a.loadCollection = self.loadCollection
+            a.loadCollection = tempLoadCollection
+            detailViewController?.a.loadCollection = a.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
             
@@ -289,7 +294,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
             let VC_EditBeam: ViewController_EditBeam = self.storyboard?.instantiateViewController(withIdentifier: "EditBeam") as! ViewController_EditBeam
             VC_EditBeam.delegate = self
-            VC_EditBeam.beamGeo = self.BeamGeo
+            VC_EditBeam.beamGeo = a.BeamGeo
             
             
             
@@ -316,9 +321,9 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             let selectedTableRowIndexPath = theTable.indexPathForRow(at: buttonPosition)
             
             if selectedTableRowIndexPath != nil{
-                VC_EditLoad.theLoad = self.loadCollection[selectedTableRowIndexPath!.row]
+                VC_EditLoad.theLoad = a.loadCollection[selectedTableRowIndexPath!.row]
                 VC_EditLoad.theLoadIndex = selectedTableRowIndexPath!.row
-                VC_EditLoad.theBeam = self.BeamGeo
+                VC_EditLoad.theBeam = a.BeamGeo
                 VC_EditLoad.delegate = self
                 //adjust the size and location of the popover
                 let size:CGSize = CGSize(width: 400,height: 350)
@@ -363,7 +368,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         if section == 0{
             theRowCount = 6
         }else if section == 1{
-            theRowCount = self.loadCollection.count
+            theRowCount = a.loadCollection.count
         }
             return theRowCount
     }
@@ -391,23 +396,23 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             
             if indexPath.row == 0 {
                 cell.label_Description!.text = "Description:"
-                cell.label_Value.text = BeamGeo.title
+                cell.label_Value.text = a.BeamGeo.title
                 cell.label_Units!.text = ""
             }else if indexPath.row == 1 {
                 cell.label_Description!.text = "Beam Length:"
-                cell.label_Value.text = "\(BeamGeo.length)"
+                cell.label_Value.text = "\(a.BeamGeo.length)"
                 cell.label_Units!.text = "Ft."
             } else if indexPath.row == 2{
                 cell.label_Description!.text = "No. of Data Pts.:"
-                cell.label_Value.text = "\(BeamGeo.dataPointCount)"
+                cell.label_Value.text = "\(a.BeamGeo.dataPointCount)"
                 cell.label_Units!.text = ""
             }else if indexPath.row == 3{
                 cell.label_Description!.text = "Modulus of Elasticity (E):"
-                cell.label_Value.text = "\(BeamGeo.E)"
+                cell.label_Value.text = "\(a.BeamGeo.E)"
                 cell.label_Units!.text = "KSI"
             }else if indexPath.row == 4{
                 cell.label_Description!.text = "Moment of Inertia (I):"
-                cell.label_Value.text = "\(BeamGeo.I)"
+                cell.label_Value.text = "\(a.BeamGeo.I)"
                 cell.label_Units!.text = "In^4"
             }
           
@@ -425,13 +430,13 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             
             
                 
-                loadCell.loadDescription!.text = self.loadCollection[indexPath.row].loadDescription
-                loadCell.loadType.text = self.loadCollection[indexPath.row].loadType
+                loadCell.loadDescription!.text = a.loadCollection[indexPath.row].loadDescription
+                loadCell.loadType.text = a.loadCollection[indexPath.row].loadType
             
-            if loadCollection[indexPath.row].loadType == loadTypeEnum.linearUp.rawValue{
-                loadCell.loadValue!.text = "\(self.loadCollection[indexPath.row].loadValue2) kips"
+            if a.loadCollection[indexPath.row].loadType == loadTypeEnum.linearUp.rawValue{
+                loadCell.loadValue!.text = "\(a.loadCollection[indexPath.row].loadValue2) kips"
             }else{
-                loadCell.loadValue!.text = "\(self.loadCollection[indexPath.row].loadValue) kips"
+                loadCell.loadValue!.text = "\(a.loadCollection[indexPath.row].loadValue) kips"
             }
         
             return loadCell
@@ -469,44 +474,46 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     
     //protocol Function for Edit Beam popover
     func updateBeamGeo(_ beam:MWBeamGeometry){
-        self.BeamGeo.title = beam.title
-        self.BeamGeo.length = beam.length
-        self.BeamGeo.dataPointCount = beam.dataPointCount
-        self.BeamGeo.E = beam.E
-        self.BeamGeo.I = beam.I
+        a.BeamGeo.title = beam.title
+        a.BeamGeo.length = beam.length
+        a.BeamGeo.dataPointCount = beam.dataPointCount
+        a.BeamGeo.E = beam.E
+        a.BeamGeo.I = beam.I
         
         theTable.reloadData()
         
         //update the beamdata in the detailView
-        detailViewController?.a.BeamGeo = self.BeamGeo
+        detailViewController?.a.BeamGeo = a.BeamGeo
         
         //check the loads for any need to update
         
-        for j:Int in 0 ..< loadCollection.count{
+        for j:Int in 0 ..< a.loadCollection.count{
            
-            loadCollection[j] = checkAndModifyLoadAgainstBeamGeo(loadCollection[j])
+            a.loadCollection[j] = checkAndModifyLoadAgainstBeamGeo(a.loadCollection[j])
         } //end for
         
         
         //update the loads with the new beam data
         
 //        for i:Int in 0 ..< loadCollection.count{
-//            loadCollection[i].loadGraphPointCollection(self.BeamGeo)
+//            loadCollection[i].loadGraphPointCollection(a.BeamGeo)
 //        } //end for
         
-        detailViewController?.a.loadCollection = self.loadCollection
+        detailViewController?.a.loadCollection = a.loadCollection
         
         detailViewController?.updateGraphs()
+        
+        
     }
     
     func updateLoad(_ load: MWLoadData, indexOfLoad:Int) {
     
         let returnLoad:MWLoadData = checkAndModifyLoadAgainstBeamGeo(load)
         
-        self.loadCollection[indexOfLoad] = returnLoad
+        a.loadCollection[indexOfLoad] = returnLoad
         
 //        //update the load with the new beam data
-//        loadCollection[indexOfLoad].loadGraphPointCollection(self.BeamGeo)
+//        loadCollection[indexOfLoad].loadGraphPointCollection(a.BeamGeo)
         
         detailViewController?.updateGraphs()
         theTable.reloadData()
@@ -518,15 +525,15 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         
         if theLoad.loadType == loadTypeEnum.concentrated.rawValue{
-            if theLoad.loadStart > self.BeamGeo.length{
-                theLoad.loadStart = self.BeamGeo.length - 0.10
+            if theLoad.loadStart > a.BeamGeo.length{
+                theLoad.loadStart = a.BeamGeo.length - 0.10
             }
         }else{
-            if theLoad.loadStart > self.BeamGeo.length{
-                theLoad.loadStart = self.BeamGeo.length - 1.0
-                theLoad.loadEnd = self.BeamGeo.length
-            }else if theLoad.loadStart < self.BeamGeo.length && theLoad.loadEnd > self.BeamGeo.length{
-                theLoad.loadEnd = self.BeamGeo.length
+            if theLoad.loadStart > a.BeamGeo.length{
+                theLoad.loadStart = a.BeamGeo.length - 1.0
+                theLoad.loadEnd = a.BeamGeo.length
+            }else if theLoad.loadStart < a.BeamGeo.length && theLoad.loadEnd > a.BeamGeo.length{
+                theLoad.loadEnd = a.BeamGeo.length
             }
         }//end if
         
