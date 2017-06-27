@@ -8,7 +8,7 @@
 
 import UIKit
 
-class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource, hasMemberRowToUpdate, hasMemberGradeToUpdate {
 
     
     @IBOutlet weak var statusBar: MWNSViewForTBStatus!
@@ -38,7 +38,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         stressTable.dataSource = self
         
         updateLabels()
-        
+        updateStatusBar()
         
         
         
@@ -71,8 +71,10 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         gradeLabel.text = string4 + string5
         
-        
-        
+    }
+    
+    func updateStatusBar(){
+    
         //update the status bar
         let failColor = UIColor.init(red: 1, green: 0, blue: 0, alpha: 0.85)
         let warningColor = UIColor.init(red: 0.95, green: 0.95, blue: 0.00, alpha: 1)
@@ -86,7 +88,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         var statusString =  stringZ + stringA + stringB + stringC
         
         
-        if design.woodDesignSectionCollection.count == 0{
+        if design.woodDesignSectionCollection.count <= 0{
             statusColor = nullColor
             statusString = "no loads"
         }else{
@@ -124,7 +126,6 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         
         statusBar.setAndDrawContent(statusString, passColor: statusColor)
-        
         }
     
     
@@ -292,14 +293,67 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func updateMemberRow(row:Int){
+        self.design.a.selectedWoodSection.setSectionData(row)
+        self.design.updateDesignSectionCollections()
+        updateLabels()
+        stressTable.reloadData()
+        updateStatusBar()
+        
     }
-    */
+    
+    func updateGradeRow(row:Int){
+        var speciesToSet = speciesEnum.syp
+        var gradeToSet = woodGradeEnum.denseSelectStructural
+        
+        if row >= 0 && row <= 9{
+            speciesToSet = .syp
+        }
+        
+        if row == 0 {
+            gradeToSet = .denseSelectStructural
+        }else if row == 1{
+            gradeToSet = .selectStructural
+        }else if row == 2{
+            gradeToSet = .nonDenseSelectStructural
+        }else if row == 3{
+            gradeToSet = .no1Dense
+        }else if row == 4{
+            gradeToSet = .no1
+        }else if row == 5{
+            gradeToSet = .no1NonDense
+        }else if row == 6{
+            gradeToSet = .no2Dense
+        }else if row == 7{
+            gradeToSet = .no2
+        }else if row == 8{
+            gradeToSet = .no2NonDense
+        }else if row == 9{
+            gradeToSet = .no3AndStud
+        }
+        
+        
+        //take the user selection update the model and save data
+        design.a.selectedWoodDesignValues.setValues(speciesToSet, theGrade: gradeToSet, memberWidth: design.a.selectedWoodSection.depth)
+        
+        design.updateDesignSectionCollections()
+        
+        updateLabels()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "woodSectionSelect"{
+            let vcSelectMember = segue.destination as! vc_WoodMemberSelection
+            vcSelectMember.memberSelectDelegate = self
+            
+            
+        }else if segue.identifier == "woodGradeSelect"{
+            let vcSelectGrade = segue.destination as! vc_WoodGradeSelection
+            vcSelectGrade.gradeSelectDelegate = self
+        }
+    }
+   
+    
 
 }

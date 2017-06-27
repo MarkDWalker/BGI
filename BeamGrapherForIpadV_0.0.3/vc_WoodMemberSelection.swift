@@ -12,6 +12,9 @@ class vc_WoodMemberSelection: UIViewController, UITableViewDataSource, UITableVi
 
     @IBOutlet weak var sectionTable: UITableView!
     
+    var memberSelectDelegate:hasMemberRowToUpdate!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +29,14 @@ class vc_WoodMemberSelection: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func saveClick(_ sender: Any) {
+        
+        if memberSelectDelegate != nil && sectionTable.indexPathForSelectedRow != nil{
+            memberSelectDelegate.updateMemberRow(row: (sectionTable.indexPathForSelectedRow?.row)!)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -74,9 +85,5 @@ class vc_WoodMemberSelection: UIViewController, UITableViewDataSource, UITableVi
         return Cell1
     }
     
-
-    @IBAction func clickSave(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
 
 }

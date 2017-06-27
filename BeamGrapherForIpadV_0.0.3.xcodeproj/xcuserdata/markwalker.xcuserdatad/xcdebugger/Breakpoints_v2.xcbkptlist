@@ -58,26 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
+            timestampString = "520220916.454966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
+            landmarkName = "updateGradeRow(row:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -87,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
+            filePath = "BeamGrapherForIpadV_0.0.3/MWNSViewForTBStatus.swift"
+            timestampString = "520220481.632681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "setAndDrawContent(_:passColor:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -103,45 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
+            filePath = "BeamGrapherForIpadV_0.0.3/MWNSViewForTBStatus.swift"
+            timestampString = "520220548.882472"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520172497.55083"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "updateLabels()"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "drawLabel(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

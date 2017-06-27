@@ -31,7 +31,7 @@ class MWNSViewForTBStatus: UIView {
         
         
         
-        let clippedPath = UIBezierPath(roundedRect: dirtyRect, cornerRadius: 5)
+        let clippedPath = UIBezierPath(roundedRect: dirtyRect, cornerRadius: 10)
         clippedPath.addClip()
 
         //draw the view
@@ -61,26 +61,11 @@ class MWNSViewForTBStatus: UIView {
         theLabel.font = UIFont.boldSystemFont(ofSize: 12.0)
         //theLabel.textColor = UIColor.white
         
-   
-        
         self.addSubview(theLabel)
     }
     
     fileprivate func drawCircle(){
         
-        
-//        let theRect:CGRect = CGRect(x: self.frame.width - 55,y: 5, width: 40, height: 15)
-//        
-//        let sPt = CGPoint(x: self.frame.width - 50, y: 5)
-//        let pt2 = CGPoint(x: self.frame.width - 25, y: 5)
-//        let pt3 = CGPoint(x: self.frame.width - 25, y: 35)
-//        let pt4 = CGPoint(x: self.frame.width - 50, y: 35)
-//        
-//        circlePath.move(to: sPt)
-//        circlePath.addLine(to: pt2)
-//        circlePath.addLine(to: pt3)
-//        circlePath.addLine(to: pt4)
-//        circlePath.addLine(to: sPt)
         
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: self.frame.width - 50, y: 5, width: 35, height: 23))
         circlePath = ovalPath
@@ -93,9 +78,12 @@ class MWNSViewForTBStatus: UIView {
     func setAndDrawContent(_ labelString:String, passColor:UIColor){
         //self.subviews.removeAll()
         
+        Swift.print("\(self.subviews.count)")
+        
         for _ in self.subviews{
             removeFromSuperview()
         }
+        
         
         drawLabel(labelString)
         circleColor = passColor

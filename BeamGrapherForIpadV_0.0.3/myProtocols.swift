@@ -25,3 +25,10 @@ protocol DesignTypeDisplayer{
     func updateDesignTypeDisplay(theType:String)
 }
 
+protocol hasMemberRowToUpdate{
+    func updateMemberRow(row:Int)
+}
+
+protocol hasMemberGradeToUpdate{
+    func updateGradeRow(row:Int)
+}

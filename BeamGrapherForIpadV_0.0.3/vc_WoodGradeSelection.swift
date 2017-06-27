@@ -12,6 +12,8 @@ class vc_WoodGradeSelection: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet weak var gradeTable: UITableView!
     
+    var gradeSelectDelegate:hasMemberGradeToUpdate!
+    
      var design = MWWoodBeamDesign()
     
     override func viewDidLoad() {
