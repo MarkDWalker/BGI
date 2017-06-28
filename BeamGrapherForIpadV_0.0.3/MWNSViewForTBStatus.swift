@@ -11,6 +11,7 @@ import UIKit
 class MWNSViewForTBStatus: UIView {
     
     let statusLabel = UITextField()
+    let percentLabel = UITextField()
     
     //var initialViewColor = NSColor(calibratedHue: 0.96, saturation: 0.96, brightness: 0.96, alpha: 1)
     
@@ -49,28 +50,32 @@ class MWNSViewForTBStatus: UIView {
     }
     
     
-    fileprivate func drawLabel(_ labelString:String){
+    fileprivate func drawLabel(_ labelString:String, percentString:String){
         
         
         
         statusLabel.frame = CGRect(x: 10, y: 2, width: 400, height: 30)
+        percentLabel.frame = CGRect(x: self.frame.width - 50, y: 2, width: 35, height: 30)
+
         
         
-        //theLabel.background = false
         statusLabel.borderStyle = UITextBorderStyle.none
-        
         statusLabel.text = labelString
         statusLabel.font = UIFont.boldSystemFont(ofSize: 12.0)
-        //theLabel.textColor = UIColor.white
+       
+        percentLabel.text = percentString
+        percentLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+        
         if self.subviews.count == 0{
             self.addSubview(statusLabel)
+            self.addSubview(percentLabel)
         }
     }
     
     fileprivate func drawCircle(){
         
         
-        let ovalPath = UIBezierPath(ovalIn: CGRect(x: self.frame.width - 50, y: 5, width: 35, height: 23))
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: self.frame.width - 60, y: 5, width: 45, height: 23))
         circlePath = ovalPath
         
         
@@ -78,7 +83,7 @@ class MWNSViewForTBStatus: UIView {
     }
     
     
-    func setAndDrawContent(_ labelString:String, passColor:UIColor){
+    func setAndDrawContent(_ labelString:String, passColor:UIColor, passPercent: Double ){
         //self.subviews.removeAll()
         
         Swift.print("\(self.subviews.count)")
@@ -87,10 +92,10 @@ class MWNSViewForTBStatus: UIView {
 //            removeFromSuperview()
 //        }
         
-        
-        drawLabel(labelString)
         circleColor = passColor
         drawCircle()
+        let failScale = NSString(format:"%.0f",passPercent * 100) as String + "%"
+        drawLabel(labelString, percentString: failScale)
     }
     
     

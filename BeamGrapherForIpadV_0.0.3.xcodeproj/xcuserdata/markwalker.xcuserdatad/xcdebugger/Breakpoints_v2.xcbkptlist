@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520263178.020819"
+            timestampString = "520350604.321073"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "updateGradeRow(row:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeamGrapherForIpadV_0.0.3/MWNSViewForTBStatus.swift"
-            timestampString = "520262918.269833"
+            timestampString = "520351366.230721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "setAndDrawContent(_:passColor:)"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "setAndDrawContent(_:passColor:passPercent:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

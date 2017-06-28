@@ -87,6 +87,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         let stringC = "  |  \(design.a.selectedWoodDesignValues.limits.grade.rawValue) "
         var statusString =  stringZ + stringA + stringB + stringC
         
+        var worstFailPercent:Double = 0
         
         if design.woodDesignSectionCollection.count <= 0{
             statusColor = nullColor
@@ -118,14 +119,28 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
                     }else{
                         statusColor = failColor
                     }
+                    
                 }
+                
+                let failPercentM =  design.woodDesignSectionCollection[i].bendingStress * 1000 / design.a.selectedWoodDesignValues.FbAdjust
+                
+                let failPercentV = abs(design.woodDesignSectionCollection[i].shearStress * 1000) /   design.a.selectedWoodDesignValues.FbAdjust
+                
+                if failPercentM > worstFailPercent{
+                    worstFailPercent = failPercentM
+                }
+                
+                if failPercentV > worstFailPercent{
+                    worstFailPercent = failPercentV
+                }
+                
                 
             }//end for
         }
 
         
         
-        statusBar.setAndDrawContent(statusString, passColor: statusColor)
+        statusBar.setAndDrawContent(statusString, passColor: statusColor, passPercent:worstFailPercent)  //todo Add failPercent to this function
         statusBar.setNeedsDisplay()
         }
     
