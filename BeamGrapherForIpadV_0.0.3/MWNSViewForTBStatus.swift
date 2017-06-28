@@ -9,7 +9,9 @@
 import UIKit
 
 class MWNSViewForTBStatus: UIView {
-
+    
+    let statusLabel = UITextField()
+    
     //var initialViewColor = NSColor(calibratedHue: 0.96, saturation: 0.96, brightness: 0.96, alpha: 1)
     
     var initialViewColor = UIColor.init(red: 0.96, green: 0.96, blue: 0.96, alpha: 0.85)
@@ -51,17 +53,18 @@ class MWNSViewForTBStatus: UIView {
         
         
         
-        let theLabel = UITextField(frame: CGRect(x: 10, y: 2, width: 400, height: 30))
+        statusLabel.frame = CGRect(x: 10, y: 2, width: 400, height: 30)
         
         
         //theLabel.background = false
-        theLabel.borderStyle = UITextBorderStyle.none
+        statusLabel.borderStyle = UITextBorderStyle.none
         
-        theLabel.text = labelString
-        theLabel.font = UIFont.boldSystemFont(ofSize: 12.0)
+        statusLabel.text = labelString
+        statusLabel.font = UIFont.boldSystemFont(ofSize: 12.0)
         //theLabel.textColor = UIColor.white
-        
-        self.addSubview(theLabel)
+        if self.subviews.count == 0{
+            self.addSubview(statusLabel)
+        }
     }
     
     fileprivate func drawCircle(){
@@ -80,9 +83,9 @@ class MWNSViewForTBStatus: UIView {
         
         Swift.print("\(self.subviews.count)")
         
-        for _ in self.subviews{
-            removeFromSuperview()
-        }
+//        for _ in self.subviews{
+//            removeFromSuperview()
+//        }
         
         
         drawLabel(labelString)

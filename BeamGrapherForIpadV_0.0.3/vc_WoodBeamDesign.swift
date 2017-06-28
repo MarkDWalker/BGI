@@ -126,6 +126,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         
         
         statusBar.setAndDrawContent(statusString, passColor: statusColor)
+        statusBar.setNeedsDisplay()
         }
     
     
