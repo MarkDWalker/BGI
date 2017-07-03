@@ -99,9 +99,13 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         //select a row in the table to avoid an error
         let indexPath = IndexPath(row: 0, section:1)
         theTable.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.top)
-        
-       
     
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+   
+        updateBeamAndLoadImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,6 +126,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         detailViewController?.a.loadCollection = self.a.loadCollection
         
         detailViewController?.updateGraphs()
+        
+        updateBeamAndLoadImage()
         
         
         
@@ -148,6 +154,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             detailViewController?.updateGraphs()
             
             theTable.reloadData()
+            updateBeamAndLoadImage()
+            
         } else{
             let alertController = UIAlertController(title: "Detele Error", message: "must have at least one (1) load!", preferredStyle: .alert)
             
@@ -204,7 +212,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
            detailViewController?.a.loadCollection = a.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
-            
+            updateBeamAndLoadImage()
+
         }else{
             //an error - probably equals nil
             
@@ -253,6 +262,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
             detailViewController?.a.loadCollection = a.loadCollection
             detailViewController?.updateGraphs()
             self.theTable.reloadData()
+            updateBeamAndLoadImage()
+           
             
         }else{
             //an error - probably equals nil
@@ -484,6 +495,7 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         //update the beamdata in the detailView
         detailViewController?.a.BeamGeo = a.BeamGeo
+        updateBeamAndLoadImage()
         
         //check the loads for any need to update
         
@@ -517,6 +529,8 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
         
         detailViewController?.updateGraphs()
         theTable.reloadData()
+        updateBeamAndLoadImage()
+        
         
     }
     
@@ -541,10 +555,18 @@ class MasterViewController: UITableViewController, MyCellDelegator, MyEditBeamGe
     }//end function
     
     
+    func updateBeamAndLoadImage(){
+    
+        detailViewController?.beamAndLoadImage = self.theTable.getSnapShot(scaleFactor: 0.75)
+        
+    }
+    
+    
     
     
 
 } //end class
+
 
 
 

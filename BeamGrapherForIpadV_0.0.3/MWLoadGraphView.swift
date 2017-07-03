@@ -314,14 +314,14 @@ class MWLoadGraphView: UIView {
         return returnValue
     }
     
-    func getSnapshot() -> UIImage {
+    func getSnapshot(scaleFactor:CGFloat) -> UIImage {
         
         let width:CGFloat = self.frame.size.width
         let height:CGFloat = self.frame.size.height
-        let myScale:CGFloat = 1
+        //let myScale:CGFloat = 1
         
         UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, UIScreen.main.scale)
-        drawHierarchy(in: CGRect(x: 0, y: 0, width: width * myScale, height: height * myScale), afterScreenUpdates: true)
+        drawHierarchy(in: CGRect(x: 0, y: 0, width: width * scaleFactor, height: height * scaleFactor), afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
@@ -336,14 +336,14 @@ class MWLoadGraphView: UIView {
             selectedLoadIndex = i
             self.drawGraphs(selectedLoadIndex)
             self.setNeedsDisplay()
-            theImages.append(self.getSnapshot())
+            theImages.append(self.getSnapshot(scaleFactor: 1))
         }
         
         //add the last image for all of the loads 
         selectedLoadIndex = -1
         self.drawGraphs(selectedLoadIndex)
         self.setNeedsDisplay()
-        theImages.append(self.getSnapshot())
+        theImages.append(self.getSnapshot(scaleFactor: 1))
         
         //restore the data and control pre function call settings
         selectedLoadIndex = loadIndexToRestoreUponCompletion

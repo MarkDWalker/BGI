@@ -377,14 +377,14 @@ class MWBeamGraphView: UIView {
     }//end function
     
     
-    func getSnapshot() -> UIImage {
+    func getSnapshot(scaleFactor:CGFloat) -> UIImage {
         
         let width:CGFloat = self.frame.size.width
         let height:CGFloat = self.frame.size.height
-        let myScale:CGFloat = 1
+        
         
         UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, UIScreen.main.scale)
-        drawHierarchy(in: CGRect(x: 0, y: 0, width: width * myScale, height: height * myScale), afterScreenUpdates: true)
+        drawHierarchy(in: CGRect(x: 0, y: 0, width: width * scaleFactor, height: height * scaleFactor), afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!

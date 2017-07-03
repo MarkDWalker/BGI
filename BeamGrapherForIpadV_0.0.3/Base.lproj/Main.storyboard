@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -1096,7 +1096,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="stressTable" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zYg-tQ-leg">
-                                <rect key="frame" x="143" y="595" width="738" height="123"/>
+                                <rect key="frame" x="143" y="595" width="738" height="113"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="738" id="Gvm-ib-qn9"/>
@@ -1211,18 +1211,21 @@
                                 </constraints>
                                 <state key="normal" title="-&gt; Select"/>
                                 <connections>
-                                    <segue destination="pZJ-4i-NHv" kind="popoverPresentation" popoverAnchorView="y1y-hz-C1b" id="eRe-Xe-78w">
+                                    <segue destination="pZJ-4i-NHv" kind="popoverPresentation" identifier="woodGradeSelect" popoverAnchorView="y1y-hz-C1b" id="eRe-Xe-78w">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXT-8V-FLg">
-                                <rect key="frame" x="672" y="730" width="180" height="30"/>
+                                <rect key="frame" x="672" y="718" width="180" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="NRY-cA-udQ"/>
                                     <constraint firstAttribute="height" constant="30" id="Vsn-eq-nhp"/>
                                 </constraints>
                                 <state key="normal" title="Wood Design Calculations"/>
+                                <connections>
+                                    <segue destination="b3S-5b-aGH" kind="presentation" identifier="beamCalculations" id="JhK-fo-nde"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LjF-Xs-9Mv" customClass="MWNSViewForTBStatus" customModule="BeamGrapherForIpadV_0_0_3" customModuleProvider="target">
                                 <rect key="frame" x="262" y="59" width="500" height="32"/>
@@ -1247,8 +1250,8 @@
                             <constraint firstItem="dXT-8V-FLg" firstAttribute="centerX" secondItem="uKF-zd-F9J" secondAttribute="centerX" constant="250" id="G20-Mf-ZhQ"/>
                             <constraint firstItem="LjF-Xs-9Mv" firstAttribute="centerX" secondItem="uKF-zd-F9J" secondAttribute="centerX" id="QTh-lw-Exo"/>
                             <constraint firstItem="r4L-LQ-aBe" firstAttribute="top" secondItem="ndG-at-eGs" secondAttribute="bottom" constant="30" id="Qcv-Sr-ytR"/>
-                            <constraint firstItem="xyy-as-PEH" firstAttribute="top" secondItem="dXT-8V-FLg" secondAttribute="bottom" constant="8" id="RdD-eL-LBX"/>
-                            <constraint firstItem="xyy-as-PEH" firstAttribute="top" secondItem="zYg-tQ-leg" secondAttribute="bottom" constant="50" id="SWA-aA-efx"/>
+                            <constraint firstItem="xyy-as-PEH" firstAttribute="top" secondItem="dXT-8V-FLg" secondAttribute="bottom" constant="20" id="RdD-eL-LBX"/>
+                            <constraint firstItem="xyy-as-PEH" firstAttribute="top" secondItem="zYg-tQ-leg" secondAttribute="bottom" constant="60" id="SWA-aA-efx"/>
                             <constraint firstItem="x0n-Ys-A86" firstAttribute="centerX" secondItem="sn0-lk-wT4" secondAttribute="centerX" id="USF-Rx-cmf"/>
                             <constraint firstItem="y1y-hz-C1b" firstAttribute="top" secondItem="OwJ-lr-Xat" secondAttribute="bottom" constant="25" id="VHN-WT-zwf"/>
                             <constraint firstItem="LjF-Xs-9Mv" firstAttribute="top" secondItem="x0n-Ys-A86" secondAttribute="bottom" constant="10" id="VOU-sL-Q2i"/>
@@ -1445,6 +1448,69 @@
             </objects>
             <point key="canvasLocation" x="1544.53125" y="1105.078125"/>
         </scene>
+        <!--Vc Calculations-->
+        <scene sceneID="FWt-NK-GVT">
+            <objects>
+                <viewController id="b3S-5b-aGH" customClass="vc_Calculations" customModule="BeamGrapherForIpadV_0_0_3" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rqp-R1-CyX"/>
+                        <viewControllerLayoutGuide type="bottom" id="hBC-AY-vR1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SFo-31-AcE">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="38K-wc-sOc">
+                                <rect key="frame" x="20" y="90" width="984" height="618"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iKZ-Ws-tWO">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="mAg-kz-mOj"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Beam Design Calculations" id="wZE-oH-ba9">
+                                        <barButtonItem key="backBarButtonItem" title="back" id="uKh-7Y-XBX"/>
+                                        <barButtonItem key="leftBarButtonItem" title="&lt;-Back" id="4og-XT-K9v">
+                                            <connections>
+                                                <action selector="clickBack:" destination="b3S-5b-aGH" id="EJw-3l-zzX"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEA-a7-bFr">
+                                <rect key="frame" x="908" y="90" width="96" height="30"/>
+                                <state key="normal" title="Export to PDF"/>
+                                <connections>
+                                    <action selector="click_PDF:" destination="b3S-5b-aGH" eventType="touchUpInside" id="3IR-f3-muk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="38K-wc-sOc" firstAttribute="top" secondItem="iKZ-Ws-tWO" secondAttribute="bottom" constant="30" id="0Xz-Gn-ZAV"/>
+                            <constraint firstItem="iKZ-Ws-tWO" firstAttribute="leading" secondItem="SFo-31-AcE" secondAttribute="leading" id="2kb-58-cvJ"/>
+                            <constraint firstItem="iKZ-Ws-tWO" firstAttribute="top" secondItem="SFo-31-AcE" secondAttribute="top" id="83z-hh-rei"/>
+                            <constraint firstAttribute="trailing" secondItem="iKZ-Ws-tWO" secondAttribute="trailing" id="9ZN-xK-SBC"/>
+                            <constraint firstItem="hBC-AY-vR1" firstAttribute="top" secondItem="38K-wc-sOc" secondAttribute="bottom" constant="60" id="BjY-aP-WfD"/>
+                            <constraint firstItem="38K-wc-sOc" firstAttribute="leading" secondItem="SFo-31-AcE" secondAttribute="leadingMargin" id="F68-2X-21W"/>
+                            <constraint firstItem="38K-wc-sOc" firstAttribute="trailing" secondItem="SFo-31-AcE" secondAttribute="trailingMargin" id="NHK-bc-Bsd"/>
+                            <constraint firstItem="hEA-a7-bFr" firstAttribute="top" secondItem="iKZ-Ws-tWO" secondAttribute="bottom" constant="30" id="UPP-CH-3QK"/>
+                            <constraint firstItem="hEA-a7-bFr" firstAttribute="trailing" secondItem="SFo-31-AcE" secondAttribute="trailingMargin" id="l9p-8x-me6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tView" destination="38K-wc-sOc" id="Dky-qC-sCh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fam-Sl-Vbs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="943.94531249999989" y="2083.59375"/>
+        </scene>
         <!--Vc Wood Grade Selection-->
         <scene sceneID="tvT-GN-9BY">
             <objects>
@@ -1482,6 +1548,9 @@
                                     <constraint firstAttribute="width" constant="187" id="ePZ-vF-z67"/>
                                 </constraints>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="clickSave:" destination="pZJ-4i-NHv" eventType="touchUpInside" id="WgX-bw-Fs2"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="246" restorationIdentifier="gradeTable" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="30" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4t4-yu-wgG">
                                 <rect key="frame" x="10" y="82" width="680" height="425"/>
@@ -1740,6 +1809,13 @@
                                     <constraint firstAttribute="trailing" secondItem="RLn-3U-UzO" secondAttribute="trailing" id="wWW-zH-3Jv"/>
                                 </constraints>
                             </scrollView>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dKH-wa-p4V">
+                                <rect key="frame" x="0.0" y="19" width="703" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="rPO-nS-T6g"/>
+                                </items>
+                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Roe-EX-nF7">
                                 <rect key="frame" x="16" y="20" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1757,7 +1833,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="click_PDF:" destination="rfC-o1-JXW" eventType="touchUpInside" id="L1B-Bz-gJi"/>
+                                    <action selector="click_PDF:" destination="rfC-o1-JXW" eventType="touchUpInside" id="z0E-pf-fpe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1772,6 +1848,7 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="contentView" destination="RLn-3U-UzO" id="dye-c1-HCI"/>
+                        <outlet property="pdfBnt" destination="abT-SW-bXi" id="Fd3-nK-GG5"/>
                         <outlet property="theScrollView" destination="vCV-uJ-kN1" id="oDU-2R-Nxv"/>
                     </connections>
                 </viewController>

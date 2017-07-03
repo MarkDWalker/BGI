@@ -14,6 +14,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
     @IBOutlet weak var contentView: UIView!
     
     
+    @IBOutlet weak var pdfBnt: UIButton!
     
     
   
@@ -36,7 +37,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
     
     var fh:MWTextFormatHelper = MWTextFormatHelper()
     
-    var fileName:String = "FirstPDF.pdf"
+    var fileName:String = "BeamDesign.pdf"
     var path:String = NSTemporaryDirectory()
     var pdfPathWithFilename:String = ""
     
@@ -70,6 +71,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
         let originRect:CGRect = CGRect(x: sender.frame.origin.x - 530, y: sender.frame.origin.y, width: 10, height: 10)
         documentInteractionController.presentOpenInMenu(from: originRect, in: sender, animated: true)
         //end open in
+        Swift.print("Open in should have appeared")
     }
     
     func drawPDFBackground(_ pageRect:CGRect){
@@ -85,7 +87,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
             UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: pageSize.width, height: pageSize.height), nil)
             let width = loadImages[i].size.width
             let height = loadImages[i].size.height
-            let factor:CGFloat = 0.76
+            let factor:CGFloat = 0.5
             let yLoadViews:CGFloat = 80
             let yShearViews:CGFloat = 80 + height * factor
             let yMomentViews:CGFloat = 80 + (2 * height * factor)
@@ -142,6 +144,8 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
         
         //self.contentView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         // Do any additional setup after loading the view.
+        
+        pdfBnt.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -151,7 +155,7 @@ class ViewController_Calcs: UIViewController, UIDocumentInteractionControllerDel
             let width = loadImages[i].size.width
             let height = loadImages[i].size.height
             
-            let yLoadViews:CGFloat = 20.0 + (20 * CGFloat(i)) + (CGFloat(i) * 4 * height)
+            let yLoadViews:CGFloat = 60.0 + (20 * CGFloat(i)) + (CGFloat(i) * 4 * height)
             let yShearViews:CGFloat = 20.0 + (20 * CGFloat(i)) + height + (CGFloat(i) * 4 * height)
             let yMomentViews:CGFloat = 20.0 + (20 * CGFloat(i)) + (2 * height) + (CGFloat(i) * 4 * height)
             let yDeflectionViews:CGFloat = 20 + (20 * CGFloat(i)) + (3 * height) + (CGFloat(i) * 4 * height)

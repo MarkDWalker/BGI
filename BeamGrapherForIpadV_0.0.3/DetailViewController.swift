@@ -10,6 +10,11 @@ import UIKit
 
 class DetailViewController: UIViewController,DesignTypeDisplayer{
     
+    
+    var beamAndLoadImage = UIImage()
+    
+    
+    
     @IBOutlet weak var designTypeBtn: UIBarButtonItem!
     
     var loadGraph:MWLoadGraphView =  MWLoadGraphView()
@@ -177,6 +182,13 @@ class DetailViewController: UIViewController,DesignTypeDisplayer{
         let vcWoodDesign = storyboard?.instantiateViewController(withIdentifier: "vcWoodDesign") as! vc_WoodBeamDesign
         
         vcWoodDesign.design.a = self.a
+        
+        vcWoodDesign.loadGraphImage = self.loadGraph.getSnapshot(scaleFactor: 0.75)
+        vcWoodDesign.momentGraphImage = self.momentGraph.getSnapshot(scaleFactor: 0.65)
+        vcWoodDesign.shearGraphImage = self.shearGraph.getSnapshot(scaleFactor: 0.65)
+        vcWoodDesign.deflectionGraphImage = self.deflectionGraph.getSnapshot(scaleFactor: 0.65)
+        
+        vcWoodDesign.beamAndLoadImage = self.beamAndLoadImage
         
         self.present(vcWoodDesign, animated: true, completion: nil)
         
@@ -402,14 +414,14 @@ class DetailViewController: UIViewController,DesignTypeDisplayer{
         for i:Int in 0 ..< a.loadCollection.count{
             a.selectedLoadIndex = i
             self.updateGraphs()
-            theImages.append(graph.getSnapshot())
+            theImages.append(graph.getSnapshot(scaleFactor: 1.0))
         }
         
         //get the last set of images
         segControl.selectedSegmentIndex = 0
         a.selectedLoadIndex = -1
         self.updateGraphs()
-        theImages.append(graph.getSnapshot())
+        theImages.append(graph.getSnapshot(scaleFactor: 1.0))
         
         
         //turn the buttons back on

@@ -9,7 +9,14 @@
 import UIKit
 
 class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource, hasMemberRowToUpdate, hasMemberGradeToUpdate {
-
+    var beamAndLoadImage = UIImage()
+    
+    
+    
+    var loadGraphImage = UIImage()
+    var momentGraphImage = UIImage()
+    var shearGraphImage = UIImage()
+    var deflectionGraphImage = UIImage()
     
     @IBOutlet weak var statusBar: MWNSViewForTBStatus!
     @IBOutlet weak var sectionLabel: UILabel!
@@ -356,6 +363,8 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         design.updateDesignSectionCollections()
         
         updateLabels()
+        stressTable.reloadData()
+        updateStatusBar()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -367,6 +376,18 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         }else if segue.identifier == "woodGradeSelect"{
             let vcSelectGrade = segue.destination as! vc_WoodGradeSelection
             vcSelectGrade.gradeSelectDelegate = self
+            
+        } else if segue.identifier == "beamCalculations"{
+            let vcCalcs = segue.destination as! vc_Calculations
+            vcCalcs.calcType = "Wood"
+            vcCalcs.woodBeamDesign = self.design
+            vcCalcs.loadGraphImage = self.loadGraphImage
+            vcCalcs.momentGraphImage = self.momentGraphImage
+            vcCalcs.shearGraphImage = self.shearGraphImage
+            vcCalcs.deflectionGraphImage = self.deflectionGraphImage
+            
+            vcCalcs.beamAndLoadImage = self.beamAndLoadImage
+           
         }
     }
    

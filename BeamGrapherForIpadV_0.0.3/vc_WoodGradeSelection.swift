@@ -24,6 +24,16 @@ class vc_WoodGradeSelection: UIViewController, UITableViewDelegate, UITableViewD
         gradeTable.dataSource = self
         // Do any additional setup after loading the view.
     }
+    
+    
+    @IBAction func clickSave(_ sender: Any) {
+        if gradeSelectDelegate != nil && gradeTable.indexPathForSelectedRow != nil{
+            gradeSelectDelegate.updateGradeRow(row: (gradeTable.indexPathForSelectedRow?.row)!)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,6 +61,8 @@ class vc_WoodGradeSelection: UIViewController, UITableViewDelegate, UITableViewD
         
         
             let Cell2 = gradeTable.dequeueReusableCell(withIdentifier: "gradeCell", for: indexPath) as! CustomCell_GradeData
+        
+        Cell2.backgroundColor = UIColor.blue
             
             let row = indexPath.row
             
@@ -93,13 +105,13 @@ class vc_WoodGradeSelection: UIViewController, UITableViewDelegate, UITableViewD
             
             
             
-            if indexPath.row == 0 || indexPath.row % 2 == 0 {
-                Cell2.backgroundColor = UIColor.green
-                
-            }else{
-                Cell2.backgroundColor = UIColor.white
-            }
+        if indexPath.row % 2 == 0 {
+            Cell2.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
             
+        }else{
+            Cell2.backgroundColor = UIColor.white
+        }
+        
             return Cell2
             
         }

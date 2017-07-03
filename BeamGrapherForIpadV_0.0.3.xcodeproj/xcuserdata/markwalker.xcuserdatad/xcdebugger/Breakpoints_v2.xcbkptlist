@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeamGrapherForIpadV_0.0.3/DetailViewController.swift"
-            timestampString = "520168713.488077"
+            timestampString = "520602251.266739"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
             landmarkName = "getBeamGraphSnapShots(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeamGrapherForIpadV_0.0.3/vc_WoodBeamDesign.swift"
-            timestampString = "520350604.321073"
+            timestampString = "520518608.8321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "updateGradeRow(row:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -73,13 +73,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BeamGrapherForIpadV_0.0.3/MWNSViewForTBStatus.swift"
-            timestampString = "520351366.230721"
+            filePath = "BeamGrapherForIpadV_0.0.3/ViewController_Calcs.swift"
+            timestampString = "520607742.759756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "setAndDrawContent(_:passColor:passPercent:)"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "click_PDF(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeamGrapherForIpadV_0.0.3/vc_Calculations.swift"
+            timestampString = "520701902.638502"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1138"
+            endingLineNumber = "1138"
+            landmarkName = "drawPDFContent(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeamGrapherForIpadV_0.0.3/vc_Calculations.swift"
+            timestampString = "520701902.638502"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1144"
+            endingLineNumber = "1144"
+            landmarkName = "drawPDFContent(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeamGrapherForIpadV_0.0.3/vc_Calculations.swift"
+            timestampString = "520701902.638502"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1149"
+            endingLineNumber = "1149"
+            landmarkName = "drawPDFContent(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

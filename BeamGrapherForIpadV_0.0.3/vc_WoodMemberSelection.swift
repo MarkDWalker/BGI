@@ -59,7 +59,7 @@ class vc_WoodMemberSelection: UIViewController, UITableViewDataSource, UITableVi
             
             
             let bgColorView = UIView()
-            bgColorView.backgroundColor = UIColor.red
+            bgColorView.backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 1, alpha: 1)
             Cell1.selectedBackgroundView = bgColorView
             
             tempSectionData.setSectionData(indexPath.row)
@@ -73,8 +73,8 @@ class vc_WoodMemberSelection: UIViewController, UITableViewDataSource, UITableVi
             
             
             
-            if indexPath.row == 0 || indexPath.row % 2 == 0 {
-                Cell1.backgroundColor = UIColor.green
+            if indexPath.row % 2 == 0 {
+                Cell1.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
                 
             }else{
                 Cell1.backgroundColor = UIColor.white
