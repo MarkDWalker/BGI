@@ -8,7 +8,7 @@
 
 import UIKit
 
-class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource, hasMemberRowToUpdate, hasMemberGradeToUpdate {
+class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataSource, hasMemberRowToUpdate, hasMemberGradeToUpdate, MyCellDelegator, MWFactorReceiver {
     var beamAndLoadImage = UIImage()
     
     
@@ -240,7 +240,7 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
                 Cell3.fvFactorLabel.text = "n/a"
                 Cell3.eFactorLabel.text = "n/a"
             }
-            
+            Cell3.delegate = self
             return Cell3
             
         }else if (tableView.restorationIdentifier == "stressTable"){
@@ -367,6 +367,9 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
         updateStatusBar()
     }
     
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "woodSectionSelect"{
             let vcSelectMember = segue.destination as! vc_WoodMemberSelection
@@ -387,10 +390,114 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
             vcCalcs.deflectionGraphImage = self.deflectionGraphImage
             
             vcCalcs.beamAndLoadImage = self.beamAndLoadImage
-           
+            
+        }else if segue.identifier == "editFactor"{
+            let vcEditFactor = self.storyboard?.instantiateViewController(withIdentifier: "editFactor") as! vc_EditFactor
+            let popController:UIPopoverController = UIPopoverController(contentViewController: vcEditFactor)
+            
+            let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to:factorTable)
+            let selectedTableRowIndexPath = factorTable.indexPathForRow(at: buttonPosition)
+            
+            if selectedTableRowIndexPath != nil{
+                vcEditFactor.receiverDelegate = self
+                
+                //adjust the size and location of the popover
+                let size:CGSize = CGSize(width: 400,height: 350)
+                popController.contentSize = size;
+                var theFrame = (sender! as AnyObject).frame
+                theFrame?.origin.x = 10
+                //end adjust
+                
+                
+                
+                let row = selectedTableRowIndexPath?.row
+                
+                if row! >= 0 && row! <= 5{
+                    if row == 0 {
+                        vcEditFactor.tableColumnTitle = "Load Duration Factor (Cd)"
+                        vcEditFactor.factor = "Cd"
+                        vcEditFactor.view.frame.size = CGSize(width: 200, height: 220)
+                        
+                    }else if row == 1{
+                        vcEditFactor.tableColumnTitle = "Wet Service Factor (Cm)"
+                        vcEditFactor.factor = "Cm"
+                        vcEditFactor.view.frame.size = CGSize(width: 500, height: 150)
+                    }else if row == 2{
+                        vcEditFactor.tableColumnTitle = "Temperature Factor (Ct)"
+                        vcEditFactor.factor = "Ct"
+                        vcEditFactor.view.frame.size = CGSize(width: 500, height: 210)
+                    }else if row == 3{
+                        vcEditFactor.tableColumnTitle = "Size Factor (Cf)"
+                        vcEditFactor.factor = "Cf"
+                        vcEditFactor.view.frame.size = CGSize(width: 500, height: 210)
+                    }else if row == 4{
+                        vcEditFactor.tableColumnTitle = "Flat Use Factor (Cfu)"
+                        vcEditFactor.factor = "Cfu"
+                        vcEditFactor.view.frame.size = CGSize(width: 500, height: 210)
+                    }else if row == 5{
+                        vcEditFactor.tableColumnTitle = "Repetative Member Factor (Cr)"
+                        vcEditFactor.factor = "Cr"
+                        vcEditFactor.view.frame.size = CGSize(width: 500, height: 210)
+                    }
+                    
+                    
+                    popController.present(from: theFrame!, in: (sender as! UIButton), permittedArrowDirections: UIPopoverArrowDirection.any, animated: true)
+                }//else if row == 6{
+                //                    let vcEditCL = storyboard?.instantiateController(withIdentifier: "clSelector") as! vc_clSelector
+                //                    clSelector.title = "SPECIFY BEAM STABLIITY FACTOR (CL)"
+                //
+                //                    clSelector.a = self.design.a
+                //
+                //                    clSelector.receiverDelegate = self
+                //                    //self.presentViewController(clSelector, asPopoverRelativeToRect: sender.frame, ofView: sender as! NSView, preferredEdge: NSRectEdge.MinX , behavior: NSPopoverBehavior.Transient)
+                //                    self.presentViewControllerAsModalWindow(clSelector)
+                
+            }
+            //            
         }
     }
-   
+    
+    
+    
+    
+    
+        //protocol Function for Factor Segue
+        func callSegueFromCell(_ theSender: AnyObject, theSegueIdentifier:String){
+            //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+            self.performSegue(withIdentifier: theSegueIdentifier, sender:theSender)
+        }
+        
+        
+        
+        
+        func sendReceiveFactor(_ theFactor:String, theDouble:Double, secondDouble:Double, thirdDouble:Double){
+            
+            if theFactor == "Cd"{
+                design.a.selectedWoodDesignValues.wF.Cd = theDouble
+            }else if theFactor == "Cm"{
+                design.a.selectedWoodDesignValues.wF.CmFb = theDouble
+                design.a.selectedWoodDesignValues.wF.CmFv = secondDouble
+                design.a.selectedWoodDesignValues.wF.CmE = thirdDouble
+            }else if theFactor == "Ct"{
+                design.a.selectedWoodDesignValues.wF.CtFb = theDouble
+                design.a.selectedWoodDesignValues.wF.CtFv = secondDouble
+                design.a.selectedWoodDesignValues.wF.CtE = thirdDouble
+            }else if theFactor == "Cf"{
+                design.a.selectedWoodDesignValues.wF.Cf = theDouble
+            }else if theFactor == "Cfu"{
+                design.a.selectedWoodDesignValues.wF.Cfu = theDouble
+            }else if theFactor == "Cr"{
+                design.a.selectedWoodDesignValues.wF.Cr = theDouble
+            }else if theFactor == "Cl"{
+                design.a.selectedWoodDesignValues.wF.Cl = theDouble
+            }
+            
+            design.a.selectedWoodDesignValues.setAdjustedValues()
+            factorTable.reloadData()
+            stressTable.reloadData()
+            updateStatusBar()
+            
+        }
     
 
 }

@@ -164,9 +164,12 @@ class vc_Calculations: UIViewController, UIDocumentInteractionControllerDelegate
         iNL()
         iNL()
         
-        iImage(getBeamGeoImage())
-        
-        iImage(getloadListImage())
+        if beamAndLoadImage.cgImage != nil{
+            
+            iImage(getBeamGeoImage())
+            
+            iImage(getloadListImage())
+        }
         
         iNL()
         iNL()

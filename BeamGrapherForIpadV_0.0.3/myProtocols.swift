@@ -33,6 +33,10 @@ protocol hasMemberGradeToUpdate{
     func updateGradeRow(row:Int)
 }
 
+protocol MWFactorReceiver{
+    func sendReceiveFactor(_ theFactor: String, theDouble:Double, secondDouble:Double, thirdDouble:Double)
+}
+
 extension UITableView{
     
     func getSnapShot(scaleFactor:CGFloat) -> UIImage{
