@@ -168,6 +168,8 @@ class vc_Calculations: UIViewController, UIDocumentInteractionControllerDelegate
             
             iImage(getBeamGeoImage())
             
+            iNL()
+            
             iImage(getloadListImage())
         }
         
@@ -1136,27 +1138,94 @@ class vc_Calculations: UIViewController, UIDocumentInteractionControllerDelegate
         let pageRect = CGRect(x: leftMargin, y: topMargin, width: Int(pageSize.width) - leftMargin - leftMargin, height: Int(pageSize.height) - topMargin - topMargin)
     
         
-        //Page 1
-        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
-        let pdfOutput = tView.textStorage.attributedSubstring(from: NSMakeRange(0, 113))
-        pdfOutput.draw(in: pageRect)
+        var previousPageStartIndex = 0
+        var previousPageRangeLength = 0
+        var endOfPages = false
+        repeat{
+            UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
+            let pageStartIndex = previousPageStartIndex + previousPageRangeLength
+            let pageRangeLength = rangeLengthForSinglePage(attStorage: tView.textStorage, startIndex: pageStartIndex)
+            let pdfOutput = tView.textStorage.attributedSubstring(from: NSMakeRange(pageStartIndex, pageRangeLength))
+            pdfOutput.draw(in: pageRect)
+            
+            previousPageStartIndex = pageStartIndex
+            previousPageRangeLength = pageRangeLength
+            
+            Swift.print ("LastProcessedIndex = \(pageStartIndex + pageRangeLength)")
+            if pageStartIndex + pageRangeLength == tView.textStorage.length{
+                endOfPages = true
+            }
+            
+        }while(endOfPages == false)
         
         
-        //Page 2
-        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
-        let pdfOutput2 = tView.textStorage.attributedSubstring(from: NSMakeRange(113, 938))
-        pdfOutput2.draw(in: pageRect)
-
-        //Page 3
-        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
-        let pdfOutput3 = tView.textStorage.attributedSubstring(from: NSMakeRange(1051, 747))
-        pdfOutput3.draw(in: pageRect)
         
+//        //Page 1
+//        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
+//        let page1StartIndex = 0
+//        let page1RangeLength = rangeLengthForSinglePage(attStorage: tView.textStorage, startIndex: page1StartIndex)
+//        
+//        let pdfOutput = tView.textStorage.attributedSubstring(from: NSMakeRange(page1StartIndex, page1RangeLength))
+//        pdfOutput.draw(in: pageRect)
+//        
+//        //Page 2
+//        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
+//        let page2StartIndex = page1StartIndex + page1RangeLength
+//        let page2RangeLength = rangeLengthForSinglePage(attStorage: tView.textStorage, startIndex: page2StartIndex)
+//        let pdfOutput2 = tView.textStorage.attributedSubstring(from: NSMakeRange(page2StartIndex, page2RangeLength))
+//        pdfOutput2.draw(in: pageRect)
+//
+//        //Page 3
+//        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
+//        let page3StartIndex = page2StartIndex + page2RangeLength
+//        let page3RangeLength = rangeLengthForSinglePage(attStorage: tView.textStorage, startIndex: page3StartIndex)
+//        let pdfOutput3 = tView.textStorage.attributedSubstring(from: NSMakeRange(page3StartIndex, page3RangeLength))
+//        pdfOutput3.draw(in: pageRect)
+        
+//        //Page 4
+//        var l = tView.textStorage.length
+//        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: 612, height: 792), nil)
+//        let pdfOutput4 = tView.textStorage.attributedSubstring(from: NSMakeRange(1652, l - 1653))
+//        pdfOutput4.draw(in: pageRect)
+    }
+    
+    func rangeLengthForSinglePage(attStorage:NSAttributedString, startIndex:Int)->Int{
+        
+        var tooLarge = false
+        var counter = 1
+        
+        
+        repeat{
+            //create the next test string
+            let testString = attStorage.attributedSubstring(from: NSMakeRange(startIndex, counter))
+            let testHeight = getPageRangeHeight(attString: testString)
+            Swift.print ("testHeight is now - \(testHeight)")
+            Swift.print("Counter = \(counter)")
+            if (testHeight > 700.00){
+                tooLarge = true
+                counter = counter - 2
+            }
+            counter += 1
+        }while (tooLarge == false && startIndex + counter < attStorage.length)
+        
+        if startIndex + counter >= attStorage.length{
+             counter = attStorage.length - startIndex
+        }
+        
+        return counter
         
     }
     
     
     
+    func getPageRangeHeight(attString:NSAttributedString)->CGFloat{
+        
+        let s = NSAttributedString.size(attString)
+        return s().height
+        
+       // let size = textView.sizeThatFits(CGSize(width: maxWidth, height: CGFloat.max))
+        
+    }
     
     
   

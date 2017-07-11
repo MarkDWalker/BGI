@@ -84,6 +84,21 @@ class ViewController_EditLoad: UIViewController {
     }
 
     @IBAction func click_Update(_ sender: AnyObject) {
+        
+        guard (Double(tv_LoadValue.text!) != nil) else{
+            return
+        }
+        
+        guard (Double(tv_SartLocation.text!) != nil) else{
+            return
+        }
+        
+        guard (Double(tv_EndLocation.text!) != nil) else{
+            return
+        }
+        
+        
+        
         theLoad.loadDescription = tv_Description.text!
         
         //check the value of tv_LoadValue

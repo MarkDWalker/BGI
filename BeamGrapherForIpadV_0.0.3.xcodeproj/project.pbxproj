@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98006F931F1032A700611D4C /* vc_EditCLFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98006F921F1032A700611D4C /* vc_EditCLFactor.swift */; };
+		98006F951F10389D00611D4C /* MWWoodCLCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98006F941F10389D00611D4C /* MWWoodCLCalculator.swift */; };
 		9800C8961F0919300066BDEB /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9800C8951F0919300066BDEB /* LaunchImage.png */; };
 		9800C8981F091A360066BDEB /* LaunchImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9800C8971F091A360066BDEB /* LaunchImage2.png */; };
 		98012C701F002B3E00FAB6B5 /* CustomCell_StressResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */; };
 		98012C721F0035C700FAB6B5 /* MWNSViewForTBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98012C711F0035C700FAB6B5 /* MWNSViewForTBStatus.swift */; };
+		980FA3571F142E7B0099DE34 /* CustomCell_2ColumnEdit2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980FA3561F142E7B0099DE34 /* CustomCell_2ColumnEdit2.swift */; };
 		981BE1B21EF4B34200CB76B3 /* vc_DesignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981BE1B11EF4B34200CB76B3 /* vc_DesignType.swift */; };
 		9825B85C1EFBE5390017930E /* CustomCell_WoodFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9825B85B1EFBE5390017930E /* CustomCell_WoodFactor.swift */; };
 		983E91281EF316FD00CDCD79 /* MWTextFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983E91271EF316FD00CDCD79 /* MWTextFormatHelper.swift */; };
@@ -21,6 +24,7 @@
 		984FC3301EF5FC570005A287 /* CustomCell_TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984FC32F1EF5FC570005A287 /* CustomCell_TitleCell.swift */; };
 		985B0DE11EF7621A00DE9F23 /* CustomCell_SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */; };
 		9863074E1EF362FC00948D08 /* MWStructuralEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9863074D1EF362FC00948D08 /* MWStructuralEquations.swift */; };
+		986552771F10549F0009008B /* CustomCell_2Column.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986552761F10549F0009008B /* CustomCell_2Column.swift */; };
 		9893AD4B1F0DBFA100B355EC /* vc_EditFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9893AD4A1F0DBFA100B355EC /* vc_EditFactor.swift */; };
 		989EA1C81EF6062D002A702E /* MWWoodSectionDesignData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1C71EF6062D002A702E /* MWWoodSectionDesignData.swift */; };
 		989EA1CA1EF619C0002A702E /* CustomCell_GradeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */; };
@@ -86,10 +90,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		98006F921F1032A700611D4C /* vc_EditCLFactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = vc_EditCLFactor.swift; path = BeamGrapherForIpadV_0.0.3/vc_EditCLFactor.swift; sourceTree = "<group>"; };
+		98006F941F10389D00611D4C /* MWWoodCLCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MWWoodCLCalculator.swift; path = BeamGrapherForIpadV_0.0.3/MWWoodCLCalculator.swift; sourceTree = "<group>"; };
 		9800C8951F0919300066BDEB /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchImage.png; path = BeamGrapherForIpadV_0.0.3/LaunchImage.png; sourceTree = "<group>"; };
 		9800C8971F091A360066BDEB /* LaunchImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchImage2.png; path = BeamGrapherForIpadV_0.0.3/LaunchImage2.png; sourceTree = "<group>"; };
 		98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_StressResults.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_StressResults.swift; sourceTree = "<group>"; };
 		98012C711F0035C700FAB6B5 /* MWNSViewForTBStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWNSViewForTBStatus.swift; sourceTree = "<group>"; };
+		980FA3561F142E7B0099DE34 /* CustomCell_2ColumnEdit2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_2ColumnEdit2.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_2ColumnEdit2.swift; sourceTree = "<group>"; };
 		981BE1B11EF4B34200CB76B3 /* vc_DesignType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vc_DesignType.swift; sourceTree = "<group>"; };
 		9825B85B1EFBE5390017930E /* CustomCell_WoodFactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell_WoodFactor.swift; sourceTree = "<group>"; };
 		983E91271EF316FD00CDCD79 /* MWTextFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWTextFormatHelper.swift; sourceTree = "<group>"; };
@@ -100,6 +107,7 @@
 		984FC32F1EF5FC570005A287 /* CustomCell_TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_TitleCell.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_TitleCell.swift; sourceTree = "<group>"; };
 		985B0DE01EF7621A00DE9F23 /* CustomCell_SectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_SectionData.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_SectionData.swift; sourceTree = "<group>"; };
 		9863074D1EF362FC00948D08 /* MWStructuralEquations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWStructuralEquations.swift; sourceTree = "<group>"; };
+		986552761F10549F0009008B /* CustomCell_2Column.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_2Column.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_2Column.swift; sourceTree = "<group>"; };
 		9893AD4A1F0DBFA100B355EC /* vc_EditFactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = vc_EditFactor.swift; path = BeamGrapherForIpadV_0.0.3/vc_EditFactor.swift; sourceTree = "<group>"; };
 		989EA1C71EF6062D002A702E /* MWWoodSectionDesignData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MWWoodSectionDesignData.swift; path = BeamGrapherForIpadV_0.0.3/MWWoodSectionDesignData.swift; sourceTree = "<group>"; };
 		989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCell_GradeData.swift; path = BeamGrapherForIpadV_0.0.3/CustomCell_GradeData.swift; sourceTree = "<group>"; };
@@ -179,7 +187,9 @@
 		984FC32C1EF5DC0C0005A287 /* WoodDesign */ = {
 			isa = PBXGroup;
 			children = (
+				98006F941F10389D00611D4C /* MWWoodCLCalculator.swift */,
 				984FC32A1EF5DBF10005A287 /* vc_WoodBeamDesign.swift */,
+				98006F921F1032A700611D4C /* vc_EditCLFactor.swift */,
 				9893AD4A1F0DBFA100B355EC /* vc_EditFactor.swift */,
 				984AC0681F05185700EC4C69 /* vc_Calculations.swift */,
 				98F97FC71EFE88D20023BE17 /* vc_WoodMemberSelection.swift */,
@@ -199,6 +209,8 @@
 				989EA1C91EF619C0002A702E /* CustomCell_GradeData.swift */,
 				98F97FC51EFD849B0023BE17 /* CustomCell_FactorCell.swift */,
 				98012C6F1F002B3E00FAB6B5 /* CustomCell_StressResults.swift */,
+				986552761F10549F0009008B /* CustomCell_2Column.swift */,
+				980FA3561F142E7B0099DE34 /* CustomCell_2ColumnEdit2.swift */,
 			);
 			name = WoodDesign;
 			path = ..;
@@ -472,14 +484,17 @@
 				A72942C81B24607000A5938E /* CustomCell_BeamData.swift in Sources */,
 				98012C721F0035C700FAB6B5 /* MWNSViewForTBStatus.swift in Sources */,
 				A72942A41B23104500A5938E /* MasterViewController.swift in Sources */,
+				98006F951F10389D00611D4C /* MWWoodCLCalculator.swift in Sources */,
 				989EA1E01EF620FB002A702E /* MWLVLSectionDesignData.swift in Sources */,
 				989EA1EF1EF6B3BA002A702E /* steelGradeEnum.swift in Sources */,
 				989EA1DF1EF620FB002A702E /* MWLVLDesignValues.swift in Sources */,
+				98006F931F1032A700611D4C /* vc_EditCLFactor.swift in Sources */,
 				983E912A1EF3170800CDCD79 /* MWBeamForceUnits.swift in Sources */,
 				A72942A21B23104500A5938E /* AppDelegate.swift in Sources */,
 				989EA1D41EF61ED5002A702E /* WoodSpeciesEnum.swift in Sources */,
 				984FC3301EF5FC570005A287 /* CustomCell_TitleCell.swift in Sources */,
 				989EA1CA1EF619C0002A702E /* CustomCell_GradeData.swift in Sources */,
+				986552771F10549F0009008B /* CustomCell_2Column.swift in Sources */,
 				989EA1ED1EF6B37C002A702E /* MWLoadData.swift in Sources */,
 				983E912C1EF3242300CDCD79 /* MWBeamGeometry.swift in Sources */,
 				A79F00891B36E30300387BB8 /* ViewController_Calcs.swift in Sources */,
@@ -491,6 +506,7 @@
 				A72942C61B23B85A00A5938E /* CustomCell_EditBeam.swift in Sources */,
 				983E91281EF316FD00CDCD79 /* MWTextFormatHelper.swift in Sources */,
 				A72942CC1B24778400A5938E /* ViewController_EditBeam.swift in Sources */,
+				980FA3571F142E7B0099DE34 /* CustomCell_2ColumnEdit2.swift in Sources */,
 				A74E53091B26FF12003D9E98 /* CustomCell_LoadData.swift in Sources */,
 				984AC0691F05185700EC4C69 /* vc_Calculations.swift in Sources */,
 				989EA1E91EF6B19B002A702E /* MWSteelFactors.swift in Sources */,

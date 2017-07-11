@@ -241,6 +241,13 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
                 Cell3.eFactorLabel.text = "n/a"
             }
             Cell3.delegate = self
+            
+            if indexPath.row % 2 == 0 {
+                Cell3.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
+                
+            }else{
+                Cell3.backgroundColor = UIColor.white
+            }
             return Cell3
             
         }else if (tableView.restorationIdentifier == "stressTable"){
@@ -305,6 +312,13 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
                 cell.dRatio.textColor = UIColor.red
             }else{
                 cell.dRatio.textColor = UIColor.blue
+            }
+            
+            if indexPath.row % 2 == 0 {
+                cell.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
+                
+            }else{
+                cell.backgroundColor = UIColor.white
             }
             
             
@@ -442,18 +456,28 @@ class vc_WoodBeamDesign: UIViewController, UITableViewDelegate, UITableViewDataS
                     
                     
                     popController.present(from: theFrame!, in: (sender as! UIButton), permittedArrowDirections: UIPopoverArrowDirection.any, animated: true)
-                }//else if row == 6{
-                //                    let vcEditCL = storyboard?.instantiateController(withIdentifier: "clSelector") as! vc_clSelector
-                //                    clSelector.title = "SPECIFY BEAM STABLIITY FACTOR (CL)"
-                //
-                //                    clSelector.a = self.design.a
-                //
-                //                    clSelector.receiverDelegate = self
-                //                    //self.presentViewController(clSelector, asPopoverRelativeToRect: sender.frame, ofView: sender as! NSView, preferredEdge: NSRectEdge.MinX , behavior: NSPopoverBehavior.Transient)
-                //                    self.presentViewControllerAsModalWindow(clSelector)
-                
+                }else if row == 6{
+                    
+                    let vcEditCL = self.storyboard?.instantiateViewController(withIdentifier: "editCLFactor") as! vc_EditCLFactor
+                    
+                    let popController2:UIPopoverController = UIPopoverController(contentViewController: vcEditCL)
+                    
+                    //adjust the size and location of the popover
+                    let size:CGSize = CGSize(width: 850,height: 700)
+                    popController2.contentSize = size;
+                    var theFrame = (sender! as AnyObject).frame
+                    theFrame?.origin.x = 10
+                    //end adjust
+                    
+                    vcEditCL.title = "SPECIFY BEAM STABLIITY FACTOR (CL)"
+                    vcEditCL.a = self.design.a
+                    vcEditCL.receiverDelegate = self
+                  
+                    popController2.present(from: theFrame!, in: (sender as! UIButton), permittedArrowDirections: UIPopoverArrowDirection.any, animated: true)
+                 
+                }
             }
-            //            
+            
         }
     }
     
