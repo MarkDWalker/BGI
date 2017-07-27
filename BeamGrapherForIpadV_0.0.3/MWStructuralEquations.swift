@@ -252,9 +252,9 @@ class MWStructuralEquations:NSObject{
             if x < a {
                 returnValue = 0
             }else if x >= a && x < s1{
-                returnValue = p * (x-a)
+                returnValue = -p * (x-a)
             }else if x >= s1 && x <= s2{ //between supports
-                returnValue = p * (s1 - a) * (s2 - x) / (s2-s1)
+                returnValue = -p * (s1 - a) * (s2 - x) / (s2-s1)
                 //= P * (dist from load to support) * (dist past 1st support) / (dist betw supports)
             }else if x > s2{
                 returnValue = 0
@@ -287,9 +287,9 @@ class MWStructuralEquations:NSObject{
             if x < s1 {
                 returnValue = 0
             }else if x >= s1 && x <= s2{
-                returnValue = R1 * (x - s1)
+                returnValue = -R1 * (x - s1)
             }else if x > s2 && x <= a{
-                returnValue = p * ((a - s1) - (x-s1))  //think the issue is right here
+                returnValue = -p * ((a - s1) - (x-s1))  //think the issue is right here
             }else if x > a{
                 returnValue = 0
             }
