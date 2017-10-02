@@ -303,7 +303,7 @@ class MWStructuralEquations:NSObject{
         var returnValue:Double = 0
         
         
-        let p:Double=conLoadVal
+        let p:Double = conLoadVal
         let E:Double = BeamGeo.E * 144  // change to feet
         let I:Double = BeamGeo.I / 20736 //change to feet
         
@@ -344,8 +344,28 @@ class MWStructuralEquations:NSObject{
                 
             }else if location >= s1 && location <= s2{ //between supports
                 returnValue = (-p * a * x * (l * l - x * x)) / (6 * E * I * l)
+                
+                /////////////////
+                let increment = BeamGeo.length/(Double(BeamGeo.dataPointCount)-1)
+                let stepsToS2:Int = Int(s2/increment)
+                if location == Double(stepsToS2-1) * increment{
+                    Swift.print("Just to stop")
+                }
+                /////////////////
+    
             }else if location > s2{
-                returnValue = 0
+                //first recalculate the value of immediately prior to the  2nd everhang in order to determin the slope of the beam
+                let increment = BeamGeo.length/(Double(BeamGeo.dataPointCount)-1)
+                let stepsToS2:Int = Int(s2/increment)
+                let xTemp = s2 - (Double(stepsToS2-1) * increment)
+                
+                let deflForSlope = (-p * a * xTemp * (l * l -  xTemp * xTemp)) / (6 * E * I * l)
+                
+                //calculate slope
+                let slope = deflForSlope / increment
+                let totalDeflection = slope * x
+                
+                returnValue = totalDeflection
             }
             
         }else if conLoadLoc >= s1 && conLoadLoc <= s2{ //the load is between the supports
@@ -408,9 +428,34 @@ class MWStructuralEquations:NSObject{
             }else if location > s1 && location <= s2{
                 returnValue = -(p * a * x * (l * l - x * x)) / (6 * E * I * l)
                 
-                
+                /////////////////
+                let increment = BeamGeo.length/(Double(BeamGeo.dataPointCount)-1)
+                let stepsToS1:Int = Int(s1/increment)
+                if location == Double(stepsToS1+1) * increment{
+                    Swift.print("Just to stop")
+                }
+                /////////////////
             }else if location < s1{
-                returnValue = 0
+                
+                //first recalculate the value of immediately prior to the  2nd everhang in order to determin the slope of the beam
+                
+                
+                let increment = BeamGeo.length/(Double(BeamGeo.dataPointCount)-1)
+                
+                let stepsToS2:Int = Int(s2/increment)
+                let xTempToMatch = s2 - (Double(stepsToS2-1) * increment)
+                
+                //let stepsToS1:Int = Int(s1/increment)
+                //let xTemp = (Double(stepsToS1+1) * increment) - s1
+                let xTemp = xTempToMatch
+                
+                let deflForSlope = -(p * a * xTemp * (l * l -  xTemp * xTemp)) / (6 * E * I * l)
+                
+                //calculate slope
+                let slope = deflForSlope / increment
+                let totalDeflection = slope * x
+                
+                returnValue = totalDeflection
             }
             
         }

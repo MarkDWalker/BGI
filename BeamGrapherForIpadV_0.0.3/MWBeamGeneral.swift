@@ -581,7 +581,7 @@ class MWStructuralGraphData: NSObject{
         var tempCalcValue:Double = 0.0
         var tempPoint:CGPoint = CGPoint(x: 0, y: 0)
         
-        //the following line looks goofy because the .10 added to the length. It is necessary due to the rounding error induced by the use of Double for the counter
+        //the following line looks goofy because the .01 added to the length. It is necessary due to the rounding error induced by the use of Double for the counter
         
         for incCounter in stride(from: 0.0, through: BeamGeo.length + 0.01, by:increment){
         //for incCounter = 0.0; incCounter <= (BeamGeo.length + 0.01); incCounter = (incCounter + increment){
